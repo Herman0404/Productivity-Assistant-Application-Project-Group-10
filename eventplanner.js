@@ -13,18 +13,28 @@ class Event {
 
 // Creates a new event
 function createNewEvent(){
+
     // Simple try catch just incase
     try{
+
         // Saves name input
         const name = document.getElementById("eventName").value;
+
         // Saves inputs from start- and end-date
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
-        // Uses the inputs to create a new event object
-        const newEvent = new Event(name, startDate, endDate);
-        // Pushes object into array list
-        eventsArray.push(newEvent);
-        console.log(eventsArray)
+
+        if(name != "" && startDate && endDate){
+            
+            // Uses the inputs to create a new event object
+            const newEvent = new Event(name, startDate, endDate);
+            // Pushes object into array list
+            eventsArray.push(newEvent);
+            console.log(eventsArray)
+        } else{
+            alert("invalid entry")
+        }
+        
     }
 
     catch{
