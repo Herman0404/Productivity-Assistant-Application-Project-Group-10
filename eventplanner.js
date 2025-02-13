@@ -24,15 +24,16 @@ function createNewEvent(){
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
 
-        if(name != "" && startDate && endDate){
+        // Checks if inputs are correct
+        if(checkEventValidity(name, startDate, endDate)){
             
             // Uses the inputs to create a new event object
             const newEvent = new Event(name, startDate, endDate);
             // Pushes object into array list
             eventsArray.push(newEvent);
             console.log(eventsArray)
-        } else{
-            alert("invalid entry")
+            // Resets inputs
+            resetEventInputs();
         }
         
     }
@@ -42,5 +43,27 @@ function createNewEvent(){
     }
 }
 
+// Function to check if startDate is before endDate
+function checkEventValidity(name, startDate, endDate){
+    // Checks if name input is empty
+    if(name != ""){
+        // Checks if startDate is valid and if startDate is an earlier date than endDate
+        if(startDate < endDate && startDate){
+            return true;
+        } else {
+            alert("Date and time input problem, please make sure the dates and times are correct");
+            return false;
+        }
+    } else {
+        alert("Input a valid name for the event")
+        return false;
+    }
+    
+}
 
-console.log(eventsArray)
+// Function to reset the value of inputs after use
+function resetEventInputs(){
+    document.getElementById("eventName").value = "";
+    document.getElementById("startDate").value = "";
+    document.getElementById("endDate").value = "";
+}
