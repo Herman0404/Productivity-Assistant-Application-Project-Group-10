@@ -4,11 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="todo-act.js" defer></script>
-    <title>Document</title>
+    <title>To-Do Activities</title>
 </head>
 
 <body>
-    this is my app
+    <header>
+        <h1>To-Do Activities</h1>
+    </header>
+
+    <main class="container">
+        <!-- Left side  - Form to add new activity -->
+        <section class="add-task">
+            <h2>Add New Task</h2>
+            <form id="add-task-form">
+                <label for="task-title">Task Title:</label>
+                <input type="text" id="task-title" name="task-title" placeholder="Enter task title" required>
+
+                <label for="task-desc">Description:</label>
+                <textarea id="task-desc" name="task-desc" placeholder="Enter task description"></textarea>
+
+                <label for="task-status">Status:</label>
+                <select name="task-status" id="task-status" required>
+                    <option value="" disabled selected>Choose Status</option>
+                    <option value="not-completed">Not Completed</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <label for="task-time">Time Estimate (hours):</label>
+                <input type="number" id="task-time" name="task-time" placeholder="Enter time estimate" required>
+
+                <label for="task-category">Category:</label>
+                <select name="task-category" id="task-category" required>
+                    <option value="" disabled selected>Choose Category</option>
+                    <option value="health">Health</option>
+                    <option value="household">Household</option>
+                    <option value="work">Work</option>
+                    <option value="pleasure">Pleasure</option>
+                    <option value="others">Others</option>
+                </select>
+
+                <label for="task-dedline">Deadline:</label>
+                <input type="date" id="task-deadline" name="task-deadline" required>
+
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+        <!-- Right side - filters & List of activities -->
+         <section class="task-section">
+                <div class="controls">
+                    <h2>My Tasks</h2>
+                    <div class="filter">
+                        <label for="status-filter">Filter by Status:</label>
+                        <select id="status-filter">
+                            <option value="all">All</option>
+                            <option value="not-completed">Not Completed</option>
+                            <option value="completed">Completed</option>
+                        </select>
+
+                        <label for="category-filter">Filter by Category:</label>
+                        <select id="category-filter">
+                            <option value="all">All</option>
+                            <option value="health">Health</option>
+                            <option value="household">Household</option>
+                            <option value="work">Work</option>
+                            <option value="pleasure">Pleasure</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <ul id="task-list">
+                    <!-- List of tasks will be displayed dynamically here -->
+                </ul>
+         </section>
+
+    </main>
 </body>
 
 </html>
