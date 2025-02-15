@@ -34,6 +34,7 @@ function createNewEvent(){
             console.log(eventsArray)
             // Resets inputs
             resetEventInputs();
+            displayEvents();
         }
         
     }
@@ -42,6 +43,31 @@ function createNewEvent(){
         alert("something went wrong")
     }
 }
+
+function displayEvents() {
+    const eventListDiv = document.getElementById("eventDisplay");
+    eventListDiv.innerHTML = ""; // Clear existing content
+
+    eventsArray.forEach(event => {
+        const eventItem = document.createElement("div");
+
+        const timeFormat = ("sv-SE", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+        const startDate = event.startDate.toLocaleDateString("sv-SE");
+        const startTime = event.startDate.toLocaleTimeString("sv-SE", timeFormat);
+        const endDate = event.endDate.toLocaleDateString("sv-SE");
+        const endTime = event.endDate.toLocaleTimeString("sv-SE", timeFormat);
+
+        eventItem.innerHTML = `<strong>${event.name}</strong>: ${startDate} ${startTime} - ${endDate} ${endTime}`;
+        eventItem.style.marginBottom = "10px";
+
+        eventListDiv.appendChild(eventItem);
+    });
+}
+
 
 // Function to check if startDate is before endDate
 function checkEventValidity(name, startDate, endDate){
