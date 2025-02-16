@@ -34,6 +34,7 @@ function createNewEvent(){
             console.log(eventsArray)
             // Resets inputs
             resetEventInputs();
+            sortEvents(eventsArray);
             displayEvents();
         }
         
@@ -88,7 +89,7 @@ function checkEventValidity(name, startDate, endDate){
 }
 
 function sortEvents(events){
-    
+    events.sort((a, b) => a.startDate - b.startDate);
 }
 
 // Function to reset the value of inputs after use
