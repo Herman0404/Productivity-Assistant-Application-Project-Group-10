@@ -87,6 +87,10 @@ function checkEventValidity(name, startDate, endDate){
     
 }
 
+function sortEvents(events){
+    
+}
+
 // Function to reset the value of inputs after use
 function resetEventInputs(){
     document.getElementById("eventName").value = "";
