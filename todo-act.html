@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="todo-act-style.css">
     <script src="todo-act.js" defer></script>
     <title>To-Do Activities</title>
 </head>
@@ -15,6 +16,7 @@
         <!-- Left side  - Form to add new activity -->
         <section class="add-task">
             <h2>Add New Task</h2>
+            <h4><span id="date"></span></h4>
             <form id="add-task-form">
                 <label for="task-title">Task Title:</label>
                 <input type="text" id="task-title" name="task-title" placeholder="Enter task title" required>
@@ -42,14 +44,14 @@
                     <option value="others">Others</option>
                 </select>
 
-                <label for="task-dedline">Deadline:</label>
+                <label for="task-deadline">Deadline:</label>
                 <input type="date" id="task-deadline" name="task-deadline" required>
 
                 <button type="submit">Add Task</button>
             </form>
         </section>
         <!-- Right side - filters & List of activities -->
-         <section class="task-section">
+        <section class="task-section">
                 <div class="controls">
                     <h2>My Tasks</h2>
                     <div class="filter">
@@ -69,12 +71,34 @@
                             <option value="pleasure">Pleasure</option>
                             <option value="others">Others</option>
                         </select>
+                        <label for="sort-options">Sort by:</label>
+                        <select id="sort-options">
+                            <option value="deadline">Deadline</option>
+                            <option value="time-estimate">Time Estimate</option>
+                        </select>
                     </div>
                 </div>
                 <ul id="task-list">
                     <!-- List of tasks will be displayed dynamically here -->
+                    
+                        <li class="task-item">
+                            <div class="task-details">
+                                <h3>Buy Groceries</h3>
+                                <p><strong>Description:</strong> Buy vegetables and fruits.</p>
+                                <p><strong>Status:</strong> ❌ Not Completed</p>
+                                <p><strong>Time Estimate:</strong> 1 hour</p>
+                                <p><strong>Category:</strong> Household</p>
+                                <p><strong>Deadline:</strong> 2024-02-14</p>
+                            </div>
+                            <div class="task-actions">
+                                <button onclick="editTask(0)">Edit</button>
+                                <button class="delete-btn" onclick="deleteTask(0)">Delete</button>
+                                <input type="checkbox" onclick="toggleTaskStatus(0)">
+                            </div>
+                        </li>
+                    
                 </ul>
-         </section>
+        </section>
 
     </main>
 </body>
