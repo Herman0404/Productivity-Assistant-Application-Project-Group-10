@@ -1,9 +1,10 @@
 class Event {
     // constructor that builds the object used
-    constructor(title, startDate, endDate) {
+    constructor(title, startDate, endDate, status) {
     this.title = title;
     this.startDate = new Date(startDate);
     this.endDate = new Date(endDate);
+    this.status = status;
     }
 }
 
@@ -20,7 +21,7 @@ form.addEventListener("submit", (e)=>{
     // takes localdata saved events into an array
     // map takes stringified versions of dates and makes them into date version (needed for calculations later)
     let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate))
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
     );
 
     // takes a value from the form to check wether or not its an edit
@@ -33,7 +34,7 @@ form.addEventListener("submit", (e)=>{
         
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
-        const event = new Event(title, startDate, endDate);
+        const event = new Event(title, startDate, endDate, "not-completed");
         // checks using editingindex if its an edit or not
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
@@ -58,8 +59,8 @@ var filter = document.getElementById("event-filter");
 filter.addEventListener("change", filterEvents)
 
 // function that runs when the site loads, displays the array
-filterEvents()
-
+filterEvents();
+checkEventStatus();
 });
 
 
@@ -103,10 +104,19 @@ function displayEvents(events){
             
             </div>
             `;
+        if(event.status == "completed"){
+            li.style.backgroundColor = "gray";
+        } else {
+            li.style.backgroundColor = "red"
+        }
         // puts it into the eventlist
         eventList.appendChild(li);
         
     });
+}
+
+function eventStatusDisplay(){
+
 }
 
 // Function to check if startDate is before endDate
@@ -127,16 +137,36 @@ function checkEventValidity(title, startDate, endDate){
     
 }
 
-// sorts events based on their startDate (earliest first)
-function sortEvents(events){
-    events.sort((a, b) => a.startDate - b.startDate);
+
+// Checks if the event date has passed or not
+function checkEventStatus(){
+    // saves event array
+    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
+    );
+
+    // calls for current date
+    let currentDate = new Date();
+
+    // checks if current date is before or after event date
+    events.forEach(event => {
+        if(event.endDate < currentDate){
+            event.status = "completed";
+        } else {
+            event.status = "not-completed";
+        }
+    });
+
+    // saves new info into local storage
+    localStorage.setItem("events", JSON.stringify(events));
 }
+
 
 // makes a list based on which filter setting has been chosen
 function filterEvents(){
     // saves original events array
     let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate))
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
     );
     // receieves which value the filter selector is on
     const selectedValue = document.getElementById("event-filter").value;
@@ -164,18 +194,17 @@ function filterEvents(){
     displayEvents(eventsFiltered)
 }
 
-// updates sorting, local storage and displays with filtering
-function eventsUpdate(events){
-    sortEvents(events);
-    localStorage.setItem("events", JSON.stringify(events));
-    filterEvents();
+// sorts events based on their startDate (earliest first)
+function sortEvents(events){
+    events.sort((a, b) => a.startDate - b.startDate);
 }
+
 
 // edits event
 function editEvent(index){
     // variable of events array
     let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate))
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
     );
     // saves chosen event to edit
     let event = events[index]; 
@@ -200,7 +229,7 @@ function deleteEvent(index){
 
     // variable of event array
     let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate))
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
     );
 
     // with the index, splices the chosen one away
@@ -210,5 +239,13 @@ function deleteEvent(index){
     localStorage.setItem("events", JSON.stringify(events));
 
     // displays events
+    filterEvents();
+}
+
+
+// updates sorting, local storage and displays with filtering
+function eventsUpdate(events){
+    sortEvents(events);
+    localStorage.setItem("events", JSON.stringify(events));
     filterEvents();
 }
