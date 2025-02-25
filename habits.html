@@ -20,40 +20,48 @@
 					<label for="habit-title">Title of your habit: </label>
 					<input type="text" id="habit-title" required />
 
-                    <label>Priority level:</label>
-                    <label><input type="radio" name="habit-prio" value="low"> Low priority</label>
-                    <label><input type="radio" name="habit-prio" value="medium" checked> Medium priority</label>
-                    <label><input type="radio" name="habit-prio" value="high"> High priority</label>
+					<label>Priority level:</label>
+					<label
+						><input type="radio" name="habit-prio" value="low" /> Low
+						priority</label
+					>
+					<label
+						><input type="radio" name="habit-prio" value="medium" checked />
+						Medium priority</label
+					>
+					<label
+						><input type="radio" name="habit-prio" value="high" /> High
+						priority</label
+					>
 
-                    <button type="submit">Create routine</button>
+					<button type="submit">Create routine</button>
 				</form>
 			</fieldset>
 
-            <fieldset id="filter-sort">
-            <legend>Filter & sorting</legend>
+			<fieldset id="filter-sort">
+				<legend>Filter & sorting</legend>
 
-            <label for="filter-priority">Filter by priority:</label>
-            <select id="filter-priority">
-                <option value="all">All</option>
-                <option value="low">Low priority</option>
-                <option value="medium">Medium priority</option>
-                <option value="high">High priority</option>
-            </select>
+				<label for="filter-priority">Filter by priority:</label>
+				<select id="filter-priority">
+					<option value="all">All</option>
+					<option value="low">Low priority</option>
+					<option value="medium">Medium priority</option>
+					<option value="high">High priority</option>
+				</select>
 
-            <label for="sort-repetitions">Sort by repetitions: </label>
-            <select id="sort-repetitions">
-                <option value="ascending">Lowest first</option>
-                <option value="descending">Highest first</option>
-            </select>
-        </fieldset>
+				<label for="sort-repetitions">Sort by repetitions: </label>
+				<select id="sort-repetitions">
+					<option value="ascending">Lowest first</option>
+					<option value="descending">Highest first</option>
+				</select>
+			</fieldset>
 
-        <fieldset id="habit-list">
-            <legend>Your routines/habits</legend>
-            <div id="habits-container">
-                <!-- routines/habits rendered here via javascript -->
-            </div>
-        </fieldset>
-
+			<fieldset id="habit-list">
+				<legend>Your routines/habits</legend>
+				<div id="habits-container">
+					<!-- routines/habits rendered here via javascript -->
+				</div>
+			</fieldset>
 		</main>
 	</body>
 </html>
