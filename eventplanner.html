@@ -1,55 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="eventplanner.js" defer></script>
-    <link rel="stylesheet" href="todo-act-style.css">
-    <title>Document</title>
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="eventplanner.js" defer></script>
+		<link rel="stylesheet" href="todo-act-style.css" />
+		<title>Document</title>
+	</head>
 
-<body>
-    <header>
-        <h1>Events</h1>
-    </header>
+	<body>
+		<header>
+			<h1>Events</h1>
+		</header>
 
-    <main class="container">
-        <!-- Left side  - Form to add new activity -->
-        <section class="add-event">
-            <h2>Add New Event</h2>
-            <h4><span id="date"></span></h4>
-            <form id="add-event-form">
-                <label for="event-title">Event Title:</label>
-                <input type="text" id="event-title" name="event-title" placeholder="Enter event title" required>
+		<main class="container">
+			<!-- Left side  - Form to add new activity -->
+			<section class="add-event">
+				<h2>Add New Event</h2>
+				<h4><span id="date"></span></h4>
+				<form id="add-event-form">
+					<label for="event-title">Event Title:</label>
+					<input
+						type="text"
+						id="event-title"
+						name="event-title"
+						placeholder="Enter event title"
+						required
+					/>
 
-                <label for="event-startDate">Start Time:</label>
-                <input type="datetime-local" id="event-startDate" name="event-startDate" placeholder="Enter event start date" required> 
-                <label for="event-endDate">Start Time:</label>
-                <input type="datetime-local" id="event-endDate" name="event-endDate" placeholder="Enter event start date" required> 
+					<label for="event-startDate">Start Time:</label>
+					<input
+						type="datetime-local"
+						id="event-startDate"
+						name="event-startDate"
+						placeholder="Enter event start date"
+						required
+					/>
+					<label for="event-endDate">Start Time:</label>
+					<input
+						type="datetime-local"
+						id="event-endDate"
+						name="event-endDate"
+						placeholder="Enter event start date"
+						required
+					/>
 
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-            <section class="event-section">
-                <div class="controls">
-                    <h2>My Events</h2>
-                    <div class="filter">
-                        <label for="event-filter">Filter by Completion:</label>
-                        <select id="event-filter">
-                            <option value="all">All</option>
-                            <option value="not-completed">Not Completed</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                </div>
-        
+					<button type="submit">Submit</button>
+				</form>
+			</section>
+			<section class="event-section">
+				<div class="controls">
+					<h2>My Events</h2>
+					<div class="filter">
+						<label for="event-filter">Filter by Completion:</label>
+						<select id="event-filter">
+							<option value="all">All</option>
+							<option value="not-completed">Not Completed</option>
+							<option value="completed">Completed</option>
+						</select>
+					</div>
+				</div>
 
-                <ul id="event-list">
-                    
-                </ul>
-        </section>
-
-    </main>
-</body>
-
+				<ul id="event-list"></ul>
+			</section>
+		</main>
+	</body>
 </html>

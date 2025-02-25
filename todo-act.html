@@ -1,99 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="todo-act-style.css">
-    <script src="todo-act.js" defer></script>
-    <title>To-Do Activities</title>
-</head>
-<body>
-    <header>
-        <h1>To-Do Activities</h1>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="todo-act-style.css" />
+		<script src="todo-act.js" defer></script>
+		<title>To-Do Activities</title>
+	</head>
+	<body>
+		<header>
+			<h1>To-Do Activities</h1>
+		</header>
 
-    <main class="container">
-        <!-- Left side  - Form to add new activity -->
-        <section class="add-task">
-            <h2>Add New Task</h2>
-            <h4><span id="date"></span></h4>
-            <form id="add-task-form">
-                <label for="task-title">Task Title:</label>
-                <input type="text" id="task-title" name="task-title" placeholder="Enter task title" required>
+		<main class="container">
+			<!-- Left side  - Form to add new activity -->
+			<section class="add-task">
+				<h2>Add New Task</h2>
+				<h4><span id="date"></span></h4>
+				<form id="add-task-form">
+					<label for="task-title">Task Title:</label>
+					<input
+						type="text"
+						id="task-title"
+						name="task-title"
+						placeholder="Enter task title"
+						required
+					/>
 
-                <label for="task-desc">Description:</label>
-                <textarea id="task-desc" name="task-desc" placeholder="Enter task description"></textarea>
+					<label for="task-desc">Description:</label>
+					<textarea
+						id="task-desc"
+						name="task-desc"
+						placeholder="Enter task description"
+					></textarea>
 
-                <label for="task-status">Status:</label>
-                <select name="task-status" id="task-status" required>
-                    <option value="" disabled selected>Choose Status</option>
-                    <option value="not-completed">Not Completed</option>
-                    <option value="Completed">Completed</option>
-                </select>
+					<label for="task-status">Status:</label>
+					<select name="task-status" id="task-status" required>
+						<option value="" disabled selected>Choose Status</option>
+						<option value="not-completed">Not Completed</option>
+						<option value="Completed">Completed</option>
+					</select>
 
-                <label for="task-time">Time Estimate (hours):</label>
-                <input type="number" id="task-time" name="task-time" placeholder="Enter time estimate" required>
+					<label for="task-time">Time Estimate (hours):</label>
+					<input
+						type="number"
+						id="task-time"
+						name="task-time"
+						placeholder="Enter time estimate"
+						required
+					/>
 
-                <label for="task-category">Category:</label>
-                <select name="task-category" id="task-category" required>
-                    <option value="" disabled selected>Choose Category</option>
-                    <option value="health">Health</option>
-                    <option value="household">Household</option>
-                    <option value="work">Work</option>
-                    <option value="pleasure">Pleasure</option>
-                    <option value="others">Others</option>
-                </select>
+					<label for="task-category">Category:</label>
+					<select name="task-category" id="task-category" required>
+						<option value="" disabled selected>Choose Category</option>
+						<option value="health">Health</option>
+						<option value="household">Household</option>
+						<option value="work">Work</option>
+						<option value="pleasure">Pleasure</option>
+						<option value="others">Others</option>
+					</select>
 
-                <label for="task-deadline">Deadline:</label>
-                <input type="date" id="task-deadline" name="task-deadline" required>
+					<label for="task-deadline">Deadline:</label>
+					<input type="date" id="task-deadline" name="task-deadline" required />
 
-                <button type="submit">Add Task</button>
-            </form>
-        </section>
-        <!-- Right side - filters & List of activities -->
-        <section class="task-section">
-                <div class="controls">
-                    <h2>My Tasks</h2>
-                    <div class="filter">
-                        <label for="status-filter">Filter by Status:</label>
-                        <select id="status-filter" >
-                            <option value="all">All</option>
-                            <option value="not-completed">Not Completed</option>
-                            <option value="completed">Completed</option>
-                        </select>
+					<button type="submit">Add Task</button>
+				</form>
+			</section>
+			<!-- Right side - filters & List of activities -->
+			<section class="task-section">
+				<div class="controls">
+					<h2>My Tasks</h2>
+					<div class="filter">
+						<label for="status-filter">Filter by Status:</label>
+						<select id="status-filter">
+							<option value="all">All</option>
+							<option value="not-completed">Not Completed</option>
+							<option value="completed">Completed</option>
+						</select>
 
-                        <label for="category-filter">Filter by Category:</label>
-                        <select id="category-filter">
-                            <option value="all">All</option>
-                            <option value="health">Health</option>
-                            <option value="household">Household</option>
-                            <option value="work">Work</option>
-                            <option value="pleasure">Pleasure</option>
-                            <option value="others">Others</option>
-                        </select>
-                        <label for="sort-options">Sort by:</label>
-                        <select id="sort-options">
-                            <option value="none" selected>No Sorting</option>
-                            <option value="deadline-asc">Deadline (Ascending)</option>
-                            <option value="deadline-desc">Deadline (Descending)</option>
-                            <option value="time-asc">Time Estimate (Ascending)</option>
-                            <option value="time-desc">Time Estimate (Descending)</option>
-                            <option value="status-completed">Status (Completed First)</option>
-                            <option value="status-not-completed">Status (Not Completed First)</option>
-                        </select>
-                        <button class ="apply-btn" onclick="applyFiltersAndSort()">Apply</button>
-                    </div>
-                </div>
-                <ul id="task-list">
-                    <!-- List of tasks will be displayed dynamically here -->
-                      
-                    
-                       
-                    
-                </ul>
-        </section>
-
-    </main>
-</body>
-
+						<label for="category-filter">Filter by Category:</label>
+						<select id="category-filter">
+							<option value="all">All</option>
+							<option value="health">Health</option>
+							<option value="household">Household</option>
+							<option value="work">Work</option>
+							<option value="pleasure">Pleasure</option>
+							<option value="others">Others</option>
+						</select>
+						<label for="sort-options">Sort by:</label>
+						<select id="sort-options">
+							<option value="none" selected>No Sorting</option>
+							<option value="deadline-asc">Deadline (Ascending)</option>
+							<option value="deadline-desc">Deadline (Descending)</option>
+							<option value="time-asc">Time Estimate (Ascending)</option>
+							<option value="time-desc">Time Estimate (Descending)</option>
+							<option value="status-completed">Status (Completed First)</option>
+							<option value="status-not-completed">
+								Status (Not Completed First)
+							</option>
+						</select>
+						<button class="apply-btn" onclick="applyFiltersAndSort()">
+							Apply
+						</button>
+					</div>
+				</div>
+				<ul id="task-list">
+					<!-- List of tasks will be displayed dynamically here -->
+				</ul>
+			</section>
+		</main>
+	</body>
 </html>
