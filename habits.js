@@ -26,14 +26,27 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function displayHabits() {
-    let habits = JSON.parse(localStorage.getItem("habits")) || [ ];
-    // habitsContainer.innerHTML ="";
+		let habits = JSON.parse(localStorage.getItem("habits")) || [];
+		habitsContainer.innerHTML = "";
 
-    let habitElement = document.createElement("div");
-    habitElement.classList.add("habit-item");
+		habits.forEach((habit, index) => {
+			let habitElement = document.createElement("div");
+			habitElement.classList.add("habit-item");
 
-    habitElement.innerHTML = " " ;
-  }
+			habitElement.innerHTML = `
+      <h3>${habit.title}</h3>
+      <p><strong>Priority:</strong> ${habit.priority}</p>
+      <p><strong>Repetitions:</strong> ${habit.repetitions}</p>
+      <button onclick="repetition(${index})">+1</button>
+      <button onclick="deleteHabit(${index})">Delete</button
+      `;
+			habitsContainer.appendChild(habitElement);
+		});
+
+		console.log(habitsContainer);
+	}
+
+	displayHabits();
 })
 
 
