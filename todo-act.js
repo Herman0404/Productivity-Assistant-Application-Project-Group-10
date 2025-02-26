@@ -39,7 +39,8 @@ form.addEventListener("submit", (e)=>{
         status: status,
         timeEstimate: timeEstimate,
         category: category,
-        deadline: deadline
+        deadline: deadline,
+        createdAt: Date.now() // Ensure each task has a unique ID
     };
 
     if (editingIndex !== null) {
@@ -48,7 +49,7 @@ form.addEventListener("submit", (e)=>{
         form.removeAttribute("data-editing-index");
     } else {
         // if editing index is null, it means we are adding a new task
-        tasks.push(task);
+        tasks.unshift(task);
     }
 
    
@@ -109,26 +110,36 @@ filteredTasks.sort((a, b) => {
     taskList.innerHTML = "";
 
     //loop through the tasks array and display each task on the screen
-    filteredTasks.forEach((task, index) => {
+
+    filteredTasks.forEach(filteredTask => { 
+        let originalIndex = tasks.findIndex(t => t.createdAt === filteredTask.createdAt); // Get correct index from local storage
+    
+    //filteredTasks.forEach((task, index) => {
         let li = document.createElement("li");
         li.classList.add("task-item");
 
+        // Task status display (Updates dynamically)
+        let statusText = filteredTask.status === "Completed" ? "Completed" : "Not Completed ";
+
         li.innerHTML = `
             <div class="task-details">
-                <h3>${task.title}</h3>
-                 <p><strong>Description:</strong> ${task.description}</p>
-                <p><strong>Status:</strong> <span class="task-status">${task.status}</span></p>
-                <p><strong>Time Estimate:</strong> ${task.timeEstimate} hours</p>
-                <p><strong>Category:</strong> ${task.category}</p>
-                <p><strong>Deadline:</strong> ${task.deadline}</p>
+                <h3>${filteredTask.title}</h3>
+                 <p><strong>Description:</strong> ${filteredTask.description}</p>
+                <p><strong>Status:</strong> <span class="task-status">${filteredTask.status}</span></p>
+                <p><strong>Time Estimate:</strong> ${filteredTask.timeEstimate} hours</p>
+                <p><strong>Category:</strong> ${filteredTask.category}</p>
+                <p><strong>Deadline:</strong> ${filteredTask.deadline}</p>
             </div>
             <div class="task-actions">
-                <button class="edit-btn" onclick = "${task.closed ? 'alertTaskClosed()' : `editTask(${index})`}">Edit</button>
-                <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+                <button class="edit-btn" onclick = "${filteredTask.closed ? 'alertTaskClosed()' : `editTask(${originalIndex})`}">Edit</button>
+                <button class="delete-btn" onclick="deleteTask(${originalIndex})">Delete</button>
                 
-    <input class="check-box" type="checkbox" ${task.closed ? "checked disabled" : ""} onclick="markTaskAsClosed(${index})">
-    Mark as Closed
-
+                <!-- Checkbox for marking as completed -->
+                <input type="checkbox" class="complete-checkbox" ${filteredTask.status === "Completed" ? "checked" : ""} 
+                    onclick="toggleTaskCompletion(${originalIndex})">
+                <label>
+                    ${filteredTask.status === "Completed" ? "Mark as Not Completed" : "Mark as Completed"}
+                </label>
 
             
             </div>
@@ -175,45 +186,36 @@ function editTask(index){
 function deleteTask(index){
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     //remove the task from the tasks array
-    tasks.splice(index, 1);
+    let confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete){
+        return;
+    }
 
+    tasks.splice(index, 1);
+    
+    
     //save the updated tasks array back to local storage
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
     //refresh the task list on the screen
     displayTasks();
+    
 }
 
 
-function markTaskAsClosed(index){
+
+
+// function to mark a task as completed or not completed
+function toggleTaskCompletion(index) {
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-   //show a confirmation alert before closing the task
-   let confirmClose = confirm("Are you sure you want to close this task? Once closed, you cannot edit or undo this action.");
+    // Toggle the task status
+    tasks[index].status = tasks[index].status === "Completed" ? "not-completed" : "Completed";
 
-
-    if(!confirmClose){
-        // if user cancels, refresh the UI to uncheck the box
-        console.log("User cancelled the action");
-        displayTasks();
-        
-        return;
-    }
-   
-     
-    // add a new "closed" property without changing the status
-    tasks[index].closed = true;
-    
-
-    // save the updated tasks array back to local storage
+    // Save the updated tasks back to local storage
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    
 
-    // refresh the task list on the screen
+    // Refresh the UI
     displayTasks();
 }
 
-function alertTaskClosed(){
-    alert("This task is already closed and cannot be edited.");
-    
-}
