@@ -33,10 +33,7 @@ form.addEventListener("submit", (e)=>{
         
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
-        if(endDate > Date.now()){
-            
-        }
-        const event = new Event(title, startDate, endDate, "not-completed", Date.now());
+        const event = new Event(title, startDate, endDate, "", Date.now());
         // checks using editingindex if its an edit or not
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
@@ -62,13 +59,13 @@ filter.addEventListener("change", filterEvents)
 
 // function that runs when the site loads, displays the array
 filterEvents();
-checkEventStatus();
 });
 
 
 // function that displays an array (in this case events)
 function displayEvents(events){
     // variable for output place
+    checkEventStatus();
     let eventList = document.querySelector("#event-list");
 
     // clears the event list before displaying the tasks
@@ -109,7 +106,7 @@ function displayEvents(events){
         if(event.status == "completed"){
             li.style.backgroundColor = "gray";
         } else {
-            li.style.backgroundColor = "red"
+            li.style.backgroundColor = "green"
         }
         // puts it into the eventlist
         eventList.appendChild(li);
@@ -212,8 +209,6 @@ function editEvent(index){
     // saves chosen event to edit
     events.forEach((event, id) => {
         if(event.index === index){
-            console.log(event.index)
-            console.log(index)
             // saves qselect as variable
             let form = document.querySelector("#add-event-form");
             // fills in the title of the event
