@@ -1,10 +1,11 @@
 class Event {
     // constructor that builds the object used
-    constructor(title, startDate, endDate, status) {
+    constructor(title, startDate, endDate, status, index) {
     this.title = title;
     this.startDate = new Date(startDate);
     this.endDate = new Date(endDate);
     this.status = status;
+    this.index = index;
     }
 }
 
@@ -20,9 +21,7 @@ form.addEventListener("submit", (e)=>{
 
     // takes localdata saved events into an array
     // map takes stringified versions of dates and makes them into date version (needed for calculations later)
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
-    );
+    let events = getArray()
 
     // takes a value from the form to check wether or not its an edit
     let editingIndex = form.getAttribute("data-editing-index");
@@ -34,7 +33,10 @@ form.addEventListener("submit", (e)=>{
         
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
-        const event = new Event(title, startDate, endDate, "not-completed");
+        if(endDate > Date.now()){
+            
+        }
+        const event = new Event(title, startDate, endDate, "not-completed", Date.now());
         // checks using editingindex if its an edit or not
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
@@ -74,7 +76,7 @@ function displayEvents(events){
 
     // loops through and displays each event
 
-    events.forEach((event, index) => {
+    events.forEach(event => {
         // variable to create a new list inside event
         let li = document.createElement("li");
         // adds class "event-item" to the item
@@ -99,8 +101,8 @@ function displayEvents(events){
                 <p><strong>EndDate</strong> ${endDate} ${endTime}</p>
             </div>
             <div class="task-actions">
-                <button onclick="editEvent(${index})">Edit</button>
-                <button class="delete-btn" onclick="deleteEvent(${index})">Delete</button>
+                <button onclick="editEvent(${event.index})">Edit</button>
+                <button class="delete-btn" onclick="deleteEvent(${event.index})">Delete</button>
             
             </div>
             `;
@@ -141,9 +143,7 @@ function checkEventValidity(title, startDate, endDate){
 // Checks if the event date has passed or not
 function checkEventStatus(){
     // saves event array
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
-    );
+    let events = getArray()
 
     // calls for current date
     let currentDate = new Date();
@@ -161,13 +161,18 @@ function checkEventStatus(){
     localStorage.setItem("events", JSON.stringify(events));
 }
 
+function getArray(){
+    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
+        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status, event.index)
+    );
+    return events;
+}
+
 
 // makes a list based on which filter setting has been chosen
 function filterEvents(){
     // saves original events array
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
-    );
+    let events = getArray();
     // receieves which value the filter selector is on
     const selectedValue = document.getElementById("event-filter").value;
     // takes current date
@@ -203,23 +208,24 @@ function sortEvents(events){
 // edits event
 function editEvent(index){
     // variable of events array
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
-    );
+    let events = getArray()
     // saves chosen event to edit
-    let event = events[index]; 
-    
-    // saves qselect as variable
-    let form = document.querySelector("#add-event-form");
-    // fills in the title of the event
-    document.querySelector("#event-title").value = event.title;
+    events.forEach((event, id) => {
+        if(event.index === index){
+            console.log(event.index)
+            console.log(index)
+            // saves qselect as variable
+            let form = document.querySelector("#add-event-form");
+            // fills in the title of the event
+            document.querySelector("#event-title").value = event.title;
 
-    //set the form attribute to the index of the event being edited
-    form.setAttribute("data-editing-index", index);
-   
-    //save the updated events array back to local storage
-    localStorage.setItem("events", JSON.stringify(events));
-
+            //set the form attribute to the index of the event being edited
+            form.setAttribute("data-editing-index", id);
+        
+            //save the updated events array back to local storage
+            localStorage.setItem("events", JSON.stringify(events));
+        }
+    });
     //refresh the event list on the screen
     filterEvents();
 }
@@ -228,12 +234,14 @@ function editEvent(index){
 function deleteEvent(index){
 
     // variable of event array
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status)
-    );
-
-    // with the index, splices the chosen one away
-    events.splice(index, 1);
+    let events = getArray()
+    events.forEach((event,id) =>{
+        console.log(event.index)
+        console.log(index);
+        if(event.index === index){
+            events.splice(id, 1)
+        }
+    })
 
     // saves changes into local storage
     localStorage.setItem("events", JSON.stringify(events));
