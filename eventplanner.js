@@ -77,7 +77,7 @@ function displayEvents(events){
     checkEventStatus();
     let eventList = document.querySelector("#event-list");
 
-    // clears the event list before displaying the tasks
+    // clears the event list before displaying the events
     eventList.innerHTML = "";
 
     // loops through and displays each event
@@ -107,16 +107,16 @@ function displayEvents(events){
                     <p><strong>StartDate:</strong> ${startDate} ${startTime}</p>
                 <p><strong>EndDate</strong> ${endDate} ${endTime}</p>
             </div>
-            <div class="task-actions">
-                <button onclick="editEvent(${event.index})">Edit</button>
+            <div class="event-actions">
+                <button class="edit-btn" onclick="editEvent(${event.index})">Edit</button>
                 <button class="delete-btn" onclick="deleteEvent(${event.index})">Delete</button>
             
             </div>
             `;
         if(event.status === "passed"){
-            li.style.backgroundColor = "gray";
+            li.classList.add("passed");
         } else {
-            li.style.backgroundColor = "green"
+            li.classList.remove("passed");
         }
         // puts it into the eventlist
         eventList.appendChild(li);
@@ -240,7 +240,9 @@ function deleteEvent(index) {
     
     events.forEach((event,id) =>{
         if(event.index === index){
-            events.splice(id, 1)
+            if(window.confirm(`Are you sure you want to delete "${event.title}?"`)){
+                events.splice(id, 1)
+            }
         }
     })
 
@@ -249,6 +251,8 @@ function deleteEvent(index) {
 
     // displays events
     filterEvents();
+    
+    
 }
 
 
