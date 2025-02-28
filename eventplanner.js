@@ -114,7 +114,6 @@ function displayEvents(events){
         eventList.appendChild(li);
         
     });
-
 }
 
 function eventStatusDisplay(){
@@ -166,7 +165,7 @@ function getArray(){
         new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status, event.index)
     );
     return events;
-
+}
 
 
 // makes a list based on which filter setting has been chosen
@@ -232,14 +231,9 @@ function editEvent(index){
 
 // deletes events
 function deleteEvent(index) {
-	// variable of event array
-	let events = (JSON.parse(localStorage.getItem("events")) || []).map(
-		(event) =>
-			new Event(event.title, new Date(event.startDate), new Date(event.endDate))
-	);
-
     // variable of event array
     let events = getArray()
+    
     events.forEach((event,id) =>{
         console.log(event.index)
         console.log(index);
