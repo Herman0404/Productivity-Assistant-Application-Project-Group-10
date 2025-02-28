@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -8,19 +11,9 @@ body {
     padding: 0;
 }
 
-  
-header {
-    /*background-color: #007BFF;  Blue header */
-    background-color: #334977;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-
 .container {
     display: flex;
-    max-width: 1400px;
+    max-width: 80%;
     margin: 20px auto;
     gap: 20px;
 }
@@ -35,6 +28,7 @@ header {
     padding: 10px 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
 }
 
 .add-task form {
@@ -74,6 +68,7 @@ header {
 
 .task-section {
     flex: 2;
+    flex-wrap: wrap;
     background: #fff;
     padding: 10px 20px;
     border-radius: 8px;
@@ -223,6 +218,7 @@ header {
 /* Responsiveness */
 
 @media (max-width: 600px) {
+    
     .task-actions {
         flex-direction: column;
         gap: 5px;
@@ -232,4 +228,17 @@ header {
     .task-actions label {
         width: 100%;
     }
+}
+@media (max-width: 1100px) {
+    #task-list {
+        grid-template-columns: 1fr; /* Single column */
+    }
+}
+@media (max-width: 500px) {
+   
+    .container {
+        flex-direction: column; /* Stacked layout */
+
+    }
+   
 }
