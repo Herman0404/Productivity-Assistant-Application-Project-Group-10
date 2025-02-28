@@ -39,7 +39,8 @@ form.addEventListener("submit", (e)=>{
         status: status,
         timeEstimate: timeEstimate,
         category: category,
-        deadline: deadline
+        deadline: deadline,
+        createdAt: Date.now() // Ensure each task has a unique ID
     };
 
     if (editingIndex !== null) {
@@ -48,7 +49,7 @@ form.addEventListener("submit", (e)=>{
         form.removeAttribute("data-editing-index");
     } else {
         // if editing index is null, it means we are adding a new task
-        tasks.push(task);
+        tasks.unshift(task);
     }
 
    
@@ -75,30 +76,71 @@ displayTasks();
 function displayTasks(){
 
     let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //parse the string to convert it to an array
-    let taskList = document.querySelector("#task-list");
+    let taskList = document.querySelector("#task-list"); //this is the ul element where the tasks will be displayed
 
-    //clear the task list before displaying the tasks
+    // get filter and sort values from the form
+    let filterStatus = document.querySelector("#status-filter").value;
+    let filterCategory = document.querySelector("#category-filter").value;
+    let sortBy = document.querySelector("#sort-options").value;
+
+   // Apply filtering
+   let filteredTasks = tasks.filter(task => {
+    
+        let statusMatch = 
+        filterStatus === "all" || 
+        (filterStatus === "completed" && task.status === "Completed") || 
+        (filterStatus === "not-completed" && task.status !== "Completed");
+
+    let categoryMatch = filterCategory === "all" || task.category === filterCategory;
+
+    return statusMatch && categoryMatch;
+});
+
+// Apply sorting
+filteredTasks.sort((a, b) => {
+    if (sortBy === "deadline-asc") return new Date(a.deadline) - new Date(b.deadline);
+    if (sortBy === "deadline-desc") return new Date(b.deadline) - new Date(a.deadline);
+    if (sortBy === "time-asc") return a.timeEstimate - b.timeEstimate;
+    if (sortBy === "time-desc") return b.timeEstimate - a.timeEstimate;
+    if (sortBy === "status-completed") return a.status === "Completed" ? -1 : 1;
+    if (sortBy === "status-not-completed") return a.status !== "Completed" ? -1 : 1;
+});
+
+    //clear the existing list
     taskList.innerHTML = "";
 
     //loop through the tasks array and display each task on the screen
 
-    tasks.forEach((task, index) => {
+    filteredTasks.forEach(filteredTask => { 
+        let originalIndex = tasks.findIndex(t => t.createdAt === filteredTask.createdAt); // Get correct index from local storage
+    
+    //filteredTasks.forEach((task, index) => {
         let li = document.createElement("li");
         li.classList.add("task-item");
 
+        // Task status display (Updates dynamically)
+        let statusText = filteredTask.status === "Completed" ? "Completed" : "Not Completed ";
+
         li.innerHTML = `
             <div class="task-details">
-                <h3>${task.title}</h3>
-                 <p><strong>Description:</strong> ${task.description}</p>
-                <p><strong>Status:</strong> ${task.status === "completed" ? "✅ Completed" : "❌ Not Completed"}</p>
-                <p><strong>Time Estimate:</strong> ${task.timeEstimate} hours</p>
-                <p><strong>Category:</strong> ${task.category}</p>
-                <p><strong>Deadline:</strong> ${task.deadline}</p>
+                <h3>${filteredTask.title}</h3>
+                 <p><strong>Description:</strong> ${filteredTask.description}</p>
+                <p><strong>Status:</strong> <span class="task-status">${filteredTask.status}</span></p>
+                <p><strong>Time Estimate:</strong> ${filteredTask.timeEstimate} hours</p>
+                <p><strong>Category:</strong> ${filteredTask.category}</p>
+                <p><strong>Deadline:</strong> ${filteredTask.deadline}</p>
             </div>
             <div class="task-actions">
-                <button onclick="editTask(${index})">Edit</button>
-                <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
-                <input type="checkbox" ${task.status === "completed" ? "checked" : ""} onclick="toggleTaskStatus(${index})">
+                <button class="edit-btn" onclick = "${filteredTask.closed ? 'alertTaskClosed()' : `editTask(${originalIndex})`}">Edit</button>
+                <button class="delete-btn" onclick="deleteTask(${originalIndex})">Delete</button>
+                
+                <!-- Checkbox for marking as completed -->
+                <input type="checkbox" class="complete-checkbox" ${filteredTask.status === "Completed" ? "checked" : ""} 
+                    onclick="toggleTaskCompletion(${originalIndex})">
+                <label>
+                    ${filteredTask.status === "Completed" ? "Mark as Not Completed" : "Mark as Completed"}
+                </label>
+
             
             </div>
             `;
@@ -107,25 +149,19 @@ function displayTasks(){
     });
 }
 
-// function to mark a task as completed or not completed
-function toggleTaskStatus(index){
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    //toggle between "completed" and "not completed" status
-    tasks[index].status = tasks[index].status === "completed" ? "not completed" : "completed";
-
-    //save the updated tasks array back to local storage
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    //refresh the task list on the screen
-    displayTasks();
+function applyFiltersAndSort() {
+    displayTasks(); // Just call displayTasks(), since it already handles filtering & sorting
 }
+
 
 // function to edit a task
 function editTask(index){
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     let task = tasks[index]; //get the task at the given index to be edited
     
+       
+
+
     // fill the form with the task details to be edited
     let form = document.querySelector("#add-task-form");
    
@@ -150,13 +186,36 @@ function editTask(index){
 function deleteTask(index){
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     //remove the task from the tasks array
-    tasks.splice(index, 1);
+    let confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete){
+        return;
+    }
 
+    tasks.splice(index, 1);
+    
+    
     //save the updated tasks array back to local storage
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
     //refresh the task list on the screen
     displayTasks();
+    
 }
 
+
+
+
+// function to mark a task as completed or not completed
+function toggleTaskCompletion(index) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    // Toggle the task status
+    tasks[index].status = tasks[index].status === "Completed" ? "not-completed" : "Completed";
+
+    // Save the updated tasks back to local storage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    // Refresh the UI
+    displayTasks();
+}
 

@@ -1,4 +1,5 @@
 class Event {
+
     // constructor that builds the object used
     constructor(title, startDate, endDate, status, index) {
     this.title = title;
@@ -92,6 +93,7 @@ function displayEvents(events){
 
         // Adds text into list item
         li.innerHTML = `
+
             <div class="event-details">
                 <h3>${event.title}</h3>
                     <p><strong>StartDate:</strong> ${startDate} ${startTime}</p>
@@ -112,6 +114,7 @@ function displayEvents(events){
         eventList.appendChild(li);
         
     });
+
 }
 
 function eventStatusDisplay(){
@@ -119,23 +122,23 @@ function eventStatusDisplay(){
 }
 
 // Function to check if startDate is before endDate
-function checkEventValidity(title, startDate, endDate){
-    // Checks if title input is empty
-    if(title != ""){
-        // Checks if startDate is valid and if startDate is an earlier date than endDate
-        if(startDate < endDate && startDate){
-            return true;
-        } else {
-            alert("Date and time input problem, please make sure the dates and times are correct");
-            return false;
-        }
-    } else {
-        alert("Input a valid title for the event")
-        return false;
-    }
-    
+function checkEventValidity(title, startDate, endDate) {
+	// Checks if title input is empty
+	if (title != "") {
+		// Checks if startDate is valid and if startDate is an earlier date than endDate
+		if (startDate < endDate && startDate) {
+			return true;
+		} else {
+			alert(
+				"Date and time input problem, please make sure the dates and times are correct"
+			);
+			return false;
+		}
+	} else {
+		alert("Input a valid title for the event");
+		return false;
+	}
 }
-
 
 // Checks if the event date has passed or not
 function checkEventStatus(){
@@ -163,10 +166,11 @@ function getArray(){
         new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status, event.index)
     );
     return events;
-}
+
 
 
 // makes a list based on which filter setting has been chosen
+
 function filterEvents(){
     // saves original events array
     let events = getArray();
@@ -223,10 +227,16 @@ function editEvent(index){
     });
     //refresh the event list on the screen
     filterEvents();
+
 }
 
 // deletes events
-function deleteEvent(index){
+function deleteEvent(index) {
+	// variable of event array
+	let events = (JSON.parse(localStorage.getItem("events")) || []).map(
+		(event) =>
+			new Event(event.title, new Date(event.startDate), new Date(event.endDate))
+	);
 
     // variable of event array
     let events = getArray()
@@ -251,4 +261,5 @@ function eventsUpdate(events){
     sortEvents(events);
     localStorage.setItem("events", JSON.stringify(events));
     filterEvents();
+
 }
