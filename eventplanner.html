@@ -25,41 +25,28 @@
 						id="event-title"
 						name="event-title"
 						placeholder="Enter event title"
-						required
-					/>
+						required/>
+                <label for="event-startDate">Start Time:</label>
+                <input type="datetime-local" id="event-startDate" name="event-startDate" placeholder="Enter event start date" required> 
+                <label for="event-endDate">End Time:</label>
+                <input type="datetime-local" id="event-endDate" name="event-endDate" placeholder="Enter event end date" required> 
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+            <section class="event-section">
+                <div class="controls">
+                    <h2>My Events</h2>
+                    <div class="filter">
+                        <label for="event-filter">Filter by Status:</label>
+                        <select id="event-filter">
+                            <option value="all">All</option>
+                            <option value="not-completed">Upcoming/Ongoing</option>
+                            <option value="completed">Passed</option>
+                        </select>
+                    </div>
+                </div>
+        
 
-					<label for="event-startDate">Start Time:</label>
-					<input
-						type="datetime-local"
-						id="event-startDate"
-						name="event-startDate"
-						placeholder="Enter event start date"
-						required
-					/>
-					<label for="event-endDate">Start Time:</label>
-					<input
-						type="datetime-local"
-						id="event-endDate"
-						name="event-endDate"
-						placeholder="Enter event start date"
-						required
-					/>
-
-					<button type="submit">Submit</button>
-				</form>
-			</section>
-			<section class="event-section">
-				<div class="controls">
-					<h2>My Events</h2>
-					<div class="filter">
-						<label for="event-filter">Filter by Completion:</label>
-						<select id="event-filter">
-							<option value="all">All</option>
-							<option value="not-completed">Not Completed</option>
-							<option value="completed">Completed</option>
-						</select>
-					</div>
-				</div>
 
 				<ul id="event-list"></ul>
 			</section>
