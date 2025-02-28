@@ -31,10 +31,18 @@ form.addEventListener("submit", (e)=>{
     let title = document.querySelector("#event-title").value;
     let startDate = document.querySelector("#event-startDate").value;
     let endDate = document.querySelector("#event-endDate").value;
-        
+    const endTimestamp = new Date(endDate).getTime();
+    
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
-        const event = new Event(title, startDate, endDate, "", Date.now());
+        // gives status dependent on passed or not
+        let status = "passed"
+        if(endTimestamp > Date.now()){
+            status = "not-passed"
+            console.log("yes")
+        }
+
+        const event = new Event(title, startDate, endDate, status, Date.now());
         // checks using editingindex if its an edit or not
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
@@ -105,7 +113,7 @@ function displayEvents(events){
             
             </div>
             `;
-        if(event.status == "completed"){
+        if(event.status === "passed"){
             li.style.backgroundColor = "gray";
         } else {
             li.style.backgroundColor = "green"
@@ -114,10 +122,6 @@ function displayEvents(events){
         eventList.appendChild(li);
         
     });
-}
-
-function eventStatusDisplay(){
-
 }
 
 // Function to check if startDate is before endDate
@@ -150,9 +154,9 @@ function checkEventStatus(){
     // checks if current date is before or after event date
     events.forEach(event => {
         if(event.endDate < currentDate){
-            event.status = "completed";
+            event.status = "passed";
         } else {
-            event.status = "not-completed";
+            event.status = "not-passed";
         }
     });
 
@@ -180,13 +184,13 @@ function filterEvents(){
     // creates new array to add into
     let eventsFiltered = [];
     // checks which filter is chosen and pushes events with correct values into filtered array
-    if(selectedValue === "completed"){
+    if(selectedValue === "passed"){
         events.forEach((event) => {
             if(event.endDate < currentDate){
                 eventsFiltered.push(event);
             }
         })
-    } else if(selectedValue === "not-completed"){
+    } else if(selectedValue === "not-passed"){
         events.forEach((event) => {
             if(event.endDate > currentDate){
                 eventsFiltered.push(event);
@@ -235,8 +239,6 @@ function deleteEvent(index) {
     let events = getArray()
     
     events.forEach((event,id) =>{
-        console.log(event.index)
-        console.log(index);
         if(event.index === index){
             events.splice(id, 1)
         }
