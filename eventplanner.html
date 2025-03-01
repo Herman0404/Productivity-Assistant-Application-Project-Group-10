@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="eventplanner.js" defer></script>
-		<link rel="stylesheet" href="todo-act-style.css" />
+		<link rel="stylesheet" href="eventplanner.css" />
 		<title>Document</title>
 	</head>
 
@@ -14,20 +14,24 @@
 		</header>
 
 		<main class="container">
-			<!-- Left side  - Form to add new activity -->
+			<!-- Left side - Form to add new activity -->
 			<section class="add-event">
 				<h2>Add New Event</h2>
 				<h4><span id="date"></span></h4>
 				<form id="add-event-form">
-					<label for="event-title">Event Title:</label>
+					<label for="event-title">Event Title</label>
 					<input type="text" id="event-title" name="event-title" placeholder="Enter event title" required/>
-                <label for="event-startDate">Start Time:</label>
-                <input type="datetime-local" id="event-startDate" name="event-startDate" placeholder="Enter event start date" required> 
-                <label for="event-endDate">End Time:</label>
-                <input type="datetime-local" id="event-endDate" name="event-endDate" placeholder="Enter event end date" required> 
-                <button type="submit">Submit</button>
-            </form>
-        </section>
+		
+					<label for="event-startDate">Start Time</label>
+					<input type="datetime-local" class="eventDateInput" id="event-startDate" name="event-startDate" required> 
+		
+					<label for="event-endDate">End Time</label>
+					<input type="datetime-local" class="eventDateInput" id="event-endDate" name="event-endDate" required> 
+		
+					<button type="submit">Submit</button>
+				</form>
+			</section>
+		
             <section class="event-section">
                 <div class="controls">
                     <h2>My Events</h2>
@@ -35,8 +39,8 @@
                         <label for="event-filter">Filter by Status:</label>
                         <select id="event-filter">
                             <option value="all">All</option>
-                            <option value="not-completed">Upcoming/Ongoing</option>
-                            <option value="completed">Passed</option>
+                            <option value="not-passed">Upcoming/Ongoing</option>
+                            <option value="passed">Passed</option>
                         </select>
                     </div>
                 </div>
