@@ -101,7 +101,6 @@ function displayEvents(events){
 
         // Adds text into list item
         li.innerHTML = `
-
             <div class="event-details">
                 <h3>${event.title}</h3>
                     <p><strong>StartDate:</strong> ${startDate} ${startTime}</p>
