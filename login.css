@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+}
+
+html body{
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+    background-color: #F2F6FF;
+    font-family: 'Poppins', sans-serif;
+    
+}
+.sign-in-main{
+    height:100%;
+    width:100%;
+    position: relative;
+
+}
+
+.header {
+    
+    color: white;
+    width: 100%;
+    display: flex;
+    padding-right: 13vw;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+
+.logo {
+    width: 30vw;
+    height: 12vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    background: linear-gradient(135deg, 
+    #045FC1 0%,  /* Deep Blue */
+    #3db8f1 60%, /* More Light Blue in the Middle */
+    rgba(255, 255, 255, 0.3) 85%, /* Reduced White */
+    rgba(255, 255, 255, 0) 100% /* Transparent Fade */
+    );
+
+    /* Soft fading effect except top-left */
+    mask-image: radial-gradient(circle at 0% 0%, 
+    rgba(0,0,0,1) 15%,  /* Keep top-left sharp */
+    rgba(0,0,0,0.7) 60%, /* More light blue visible */
+    rgba(0,0,0,0) 95% /* Soft fade at the edges */
+    );
+
+    /* Alternative for better browser support */
+    -webkit-mask-image: radial-gradient(circle at 0% 0%, 
+        rgba(0,0,0,1) 15%,  
+        rgba(0,0,0,0.7) 60%,  
+        rgba(0,0,0,0) 95%);
+
+           
+}
+
+
+/* the main logo text container*/
+.logo-text-main{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vh;
+    
+    
+}
+
+/* TaskNest Text name */
+.logo-name {
+    font-size: 1.8vw;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    color: white; /* "Task" in White */
+    
+}
+
+
+/* Highlight "Nest" in orange */
+.highlight {
+    color: #FF6F00; 
+}
+
+/* tag line under the name*/
+.tag-line{
+    font-size: 0.8vw;
+    font-weight: bold;
+    
+    font-family: 'Poppins', sans-serif;
+    color: white; 
+
+}
+
+.logo-icon {
+    width: 3.5vw;  
+    height: 3.5vw;
+}
+
+.buttons {
+    display: flex;
+    gap: 3vw;
+    justify-content: flex-start;
+    
+}
+
+/*LOG IN AND SIGN UP BUTTONS*/
+.sign-up-btn,
+.log-in-btn {
+    
+    color: white;
+    padding: 0.9vw 1.4vw;
+    background-image: linear-gradient(135deg, #66D3FA 0%, #3db8f1 10%, #0872a7 100%);
+    border: none;
+    outline: none;
+    border-radius: 0.7vw;
+    font-weight: 600;
+    font-size: 0.8vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    transition: 0.2s ease-in-out;
+    box-shadow: 0px 20px 30px -6px rgba(1, 15, 54, 0.3); /* Shadow for depth */
+    
+}
+
+/*  Hover effect  */
+.sign-up-btn:hover,
+.log-in-btn:hover {
+    background-image: linear-gradient(135deg, #66D3FA 0%, #3db8f1 10%, #0872a7 100%);
+    box-shadow: 0px 2px 4px rgba(4, 2, 95, 0.5); /* Reduce shadow */
+    transform: translateY(2px); /* Push down effect */
+}
+
+/*  clicking effect  */
+.sign-up-btn:active,
+.log-in-btn:active {
+    background-image: linear-gradient(135deg, #66D3FA 10%, #3db8f1 30%, #0872a7 90%);
+    box-shadow: 0px 1px 3px rgba(139, 68, 2, 0.6); /* Smallest shadow */
+    transform: translateY(4px); /* More pushed down */
+}
+
+/* now the body content styling */
+.content{
+    height: calc(100vh - 12vw);
+    width: 100%;
+    display: flex;
+    position: relative;
+
+}
+.left{
+    height: 100%;
+    width:50%;
+    padding: 5vw 8.5vw;
+    
+}
+.left h1{
+    font-size: 3vw;
+    line-height: 3.4vw;
+}
+.left p{
+    font-size: 1.2vw;
+    font-weight: 600;
+    line-height: 1.8vw;
+    color: #666;
+    width: 92%;
+    margin-top: 1.3vw;
+    margin-bottom: 2.5vw;
+}
+
+.right{
+    height: 100%;
+    width:50%;
+    
+}
+button{
+    font-size: 1.2vw;
+    padding: 1vw 2vw;
+    background-color: #FF6F00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.right img{
+    height: 90%;
+    width: 90%;
+}

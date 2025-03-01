@@ -1,14 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="todo-act-style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="todo-act.js" defer></script>
-    <title>Document</title>
+    <title>To-Do Activities</title>
 </head>
-
 <body>
     
-</body>
+    <nav class="navbar">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="white"/>
+                    <path d="M30 50 L45 65 L70 35" stroke="#FF6F00" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="logo-text-main">
+                    <span class="logo-name">Task<span class="highlight">Nest</span></span> 
+                    <span class="tag-line">Organize, Prioritize, Achieve</span>           
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="/index.html">Home</a>
+                <a href="/todo-act.html">Todos</a>
+                <a href="/habits.html">Habits</a>
+                <a href="/eventplanner.html">Events</a>
+                
+            </div>
+            <button class="logout-btn">Log out </button>
+                
+    </nav>
+    <main class="container">
+        <!-- Left side  - Form to add new activity -->
+        <section class="add-task">
+            <h2>Add New Task</h2>
+            <h4><span id="date"></span></h4>
+            <form id="add-task-form">
+                <label for="task-title">Task Title:</label>
+                <input type="text" id="task-title" name="task-title" placeholder="Enter task title" required>
 
+					<label for="task-desc">Description:</label>
+					<textarea
+						id="task-desc"
+						name="task-desc"
+						placeholder="Enter task description"
+					></textarea>
+
+					<label for="task-status">Status:</label>
+					<select name="task-status" id="task-status" required>
+						<option value="" disabled selected>Choose Status</option>
+						<option value="not-completed">Not Completed</option>
+						<option value="Completed">Completed</option>
+					</select>
+
+					<label for="task-time">Time Estimate (hours):</label>
+					<input
+						type="number"
+						id="task-time"
+						name="task-time"
+						placeholder="Enter time estimate"
+						required
+					/>
+
+					<label for="task-category">Category:</label>
+					<select name="task-category" id="task-category" required>
+						<option value="" disabled selected>Choose Category</option>
+						<option value="health">Health</option>
+						<option value="household">Household</option>
+						<option value="work">Work</option>
+						<option value="pleasure">Pleasure</option>
+						<option value="others">Others</option>
+					</select>
+
+					<label for="task-deadline">Deadline:</label>
+					<input type="date" id="task-deadline" name="task-deadline" required />
+
+					<button type="submit">Add Task</button>
+				</form>
+			</section>
+			<!-- Right side - filters & List of activities -->
+			<section class="task-section">
+				<div class="controls">
+					<h2>My Tasks</h2>
+					<div class="filter">
+						<label for="status-filter">Filter by Status:</label>
+						<select id="status-filter">
+							<option value="all">All</option>
+							<option value="not-completed">Not Completed</option>
+							<option value="completed">Completed</option>
+						</select>
+
+						<label for="category-filter">Filter by Category:</label>
+						<select id="category-filter">
+							<option value="all">All</option>
+							<option value="health">Health</option>
+							<option value="household">Household</option>
+							<option value="work">Work</option>
+							<option value="pleasure">Pleasure</option>
+							<option value="others">Others</option>
+						</select>
+						<label for="sort-options">Sort by:</label>
+						<select id="sort-options">
+							<option value="none" selected>No Sorting</option>
+							<option value="deadline-asc">Deadline (Ascending)</option>
+							<option value="deadline-desc">Deadline (Descending)</option>
+							<option value="time-asc">Time Estimate (Ascending)</option>
+							<option value="time-desc">Time Estimate (Descending)</option>
+							<option value="status-completed">Status (Completed First)</option>
+							<option value="status-not-completed">
+								Status (Not Completed First)
+							</option>
+						</select>
+						<button class="apply-btn" onclick="applyFiltersAndSort()">
+							Apply
+						</button>
+					</div>
+				</div>
+				<ul id="task-list">
+					<!-- List of tasks will be displayed dynamically here -->
+				</ul>
+			</section>
+		</main>
+	</body>
 </html>
