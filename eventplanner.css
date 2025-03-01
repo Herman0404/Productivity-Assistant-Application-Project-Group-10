@@ -30,16 +30,23 @@ header {
 
 .add-event {
     flex: 1;
+    align-self: flex-start;
+    overflow: auto;
     background: #fff;
     padding: 5px 20px;
-    border-radius: 20px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.add-event form {
+.add-event form,
+h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.add-event label {
+    font-weight: bold;
 }
 
 .add-event input,
@@ -48,13 +55,16 @@ header {
     width: 80%;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
     margin-top: 5px;
     margin-bottom: 20px; 
 }
 
+
 /* Add event Button */
+
 
 .add-event button{
     background-color: #28a745; 
@@ -69,20 +79,29 @@ header {
     background-color: #218838;
 }
 
+
 /* right-side event list */
+
 
 .event-section {
     flex: 2;
+    align-self: flex-start;
+    overflow: auto;
     background: #fff;
     padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
+
 
 /* filters */
 
+
 .controls {
     margin-bottom: 20px;
+    margin-left: auto;  /* Push to the right */
+    margin-right: auto; /* Push to the left */
+    width: fit-content; /* Ensures the controls only take up as much space as needed */
 }
 
 .filter {
@@ -110,11 +129,13 @@ header {
     font-weight: 600; 
 }
 
+
 /* event list */
+
 
 #event-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Two events per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     max-width: 1000px;
     margin: auto;
@@ -122,23 +143,26 @@ header {
     padding: 0;
 }
 
+
 /* individual event */
+
+
 .event-item {
     background: #FFFFFF;
-    border: 1px solid #5eb8de; /*  blue border */
+    border: 1px solid rgb(94, 184, 222);
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgb(94, 184, 222, 0.2);
     display: flex;
     flex-direction: column;
     gap: 5px;
     transition: 0.3s ease-in-out;
 }
 .event-item h3 {
-    font-size: 16px; /* Smaller title */
-    margin: 5px 0px; /* Remove margin */
-    padding: 0; /* Remove padding */
-    line-height: 1.2; /* Tighten line height */
+    font-size: 16px; 
+    margin: 5px 0px; 
+    padding: 0;
+    line-height: 1.2; 
 }
 
 .event-item p {
@@ -149,28 +173,42 @@ header {
 }
 
 .event-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-0.2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
+/* passed event class */
+
+
+.passed {
+    opacity: 0.5;
+    border-color: red;
+    box-shadow: 0px 2px 4px rgba(255, 0, 0, 0.1);
+}
+
+
 /* event actions (buttons & checkboxes*/
+
 
 .event-actions {
     display: flex;
     gap: 10px;
     align-items: center;
-    justify-content: flex-start; /* Prevents full-width stretch */
+    justify-content: flex-start; 
     flex-wrap: wrap;
 }
 
 
 /* common button styles */
+
+
 .event-actions button
  {
-    flex: none; /* Prevents buttons from stretching */
+    flex: none; 
     border: none; 
     padding: 6px 8px;
-    width: auto; /* buttons are as wide as their content */
+    width: auto; 
     min-width: 50px; 
     text-align: center;
     border-radius: 5px;
@@ -178,38 +216,22 @@ header {
     transition: 0.2s ease-in-out;
     color: white;
 }
+
 .event-actions label {
     font-size: 14px;
-    
 }
 
 
 /* specific button colors */
 
+
 .event-actions .edit-btn { background: #007BFF; } /* Blue */
-.event-actions .delete-btn { background: #D32F2F; } /* Red */
+.event-actions .delete-btn { background: #ff6f6f; } /* Red */
+
 
 /* button hover effects */
 
-.event-actions .delete-btn:hover { background: #c82333; }
+
 .event-actions .edit-btn:hover { background: #0056b3; }
+.event-actions .delete-btn:hover { background: #ff0000; }
 .apply-btn:hover { background: #218838; }
-
-/* passed event class */
-.passed {
-    background-color: gray;
-}
-
-/* Responsiveness */
-
-@media (max-width: 600px) {
-    .event-actions {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .event-actions button,
-    .event-actions label {
-        width: 100%;
-    }
-}
