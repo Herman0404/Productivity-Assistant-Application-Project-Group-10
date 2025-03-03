@@ -31,10 +31,18 @@ form.addEventListener("submit", (e)=>{
     let title = document.querySelector("#event-title").value;
     let startDate = document.querySelector("#event-startDate").value;
     let endDate = document.querySelector("#event-endDate").value;
-        
+    const endTimestamp = new Date(endDate).getTime();
+    
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
-        const event = new Event(title, startDate, endDate, "", Date.now());
+        // gives status dependent on passed or not
+        let status = "passed"
+        if(endTimestamp > Date.now()){
+            status = "not-passed"
+            console.log("yes")
+        }
+
+        const event = new Event(title, startDate, endDate, status, Date.now());
         // checks using editingindex if its an edit or not
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
@@ -69,7 +77,7 @@ function displayEvents(events){
     checkEventStatus();
     let eventList = document.querySelector("#event-list");
 
-    // clears the event list before displaying the tasks
+    // clears the event list before displaying the events
     eventList.innerHTML = "";
 
     // loops through and displays each event
@@ -93,31 +101,26 @@ function displayEvents(events){
 
         // Adds text into list item
         li.innerHTML = `
-
             <div class="event-details">
                 <h3>${event.title}</h3>
-                    <p><strong>StartDate:</strong> ${startDate} ${startTime}</p>
-                <p><strong>EndDate</strong> ${endDate} ${endTime}</p>
+                    <p><strong>Start:</strong> ${startDate} ${startTime}</p>
+                <p><strong>End:</strong> ${endDate} ${endTime}</p>
             </div>
-            <div class="task-actions">
-                <button onclick="editEvent(${event.index})">Edit</button>
+            <div class="event-actions">
+                <button class="edit-btn" onclick="editEvent(${event.index})">Edit</button>
                 <button class="delete-btn" onclick="deleteEvent(${event.index})">Delete</button>
             
             </div>
             `;
-        if(event.status == "completed"){
-            li.style.backgroundColor = "gray";
+        if(event.status === "passed"){
+            li.classList.add("passed");
         } else {
-            li.style.backgroundColor = "green"
+            li.classList.remove("passed");
         }
         // puts it into the eventlist
         eventList.appendChild(li);
         
     });
-}
-
-function eventStatusDisplay(){
-
 }
 
 // Function to check if startDate is before endDate
@@ -145,14 +148,15 @@ function checkEventStatus(){
     let events = getArray()
 
     // calls for current date
-    let currentDate = new Date();
+    let currentDate = Date.now();
 
     // checks if current date is before or after event date
     events.forEach(event => {
-        if(event.endDate < currentDate){
-            event.status = "completed";
+        console.log(currentDate - event.endDate.getTime())
+        if(event.endDate.getTime() < currentDate){
+            event.status = "passed";
         } else {
-            event.status = "not-completed";
+            event.status = "not-passed";
         }
     });
 
@@ -180,13 +184,13 @@ function filterEvents(){
     // creates new array to add into
     let eventsFiltered = [];
     // checks which filter is chosen and pushes events with correct values into filtered array
-    if(selectedValue === "completed"){
+    if(selectedValue === "passed"){
         events.forEach((event) => {
             if(event.endDate < currentDate){
                 eventsFiltered.push(event);
             }
         })
-    } else if(selectedValue === "not-completed"){
+    } else if(selectedValue === "not-passed"){
         events.forEach((event) => {
             if(event.endDate > currentDate){
                 eventsFiltered.push(event);
@@ -235,10 +239,10 @@ function deleteEvent(index) {
     let events = getArray()
     
     events.forEach((event,id) =>{
-        console.log(event.index)
-        console.log(index);
         if(event.index === index){
-            events.splice(id, 1)
+            if(window.confirm(`Are you sure you want to delete "${event.title}?"`)){
+                events.splice(id, 1)
+            }
         }
     })
 
@@ -247,6 +251,8 @@ function deleteEvent(index) {
 
     // displays events
     filterEvents();
+    
+    
 }
 
 

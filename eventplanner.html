@@ -4,30 +4,56 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="eventplanner.js" defer></script>
-		<link rel="stylesheet" href="todo-act-style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="eventplanner.css" />
 		<title>Document</title>
 	</head>
 
 	<body>
-		<header>
-			<h1>Events</h1>
-		</header>
+		<nav class="navbar">
+
+			<div class="logo">
+				<svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="50" cy="50" r="45" fill="white"/>
+					<path d="M30 50 L45 65 L70 35" stroke="#FF6F00" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<div class="logo-text-main">
+					<span class="logo-name">Task<span class="highlight">Nest</span></span> 
+					<span class="tag-line">Organize, Prioritize, Achieve</span>           
+				</div>
+			</div>
+
+			<div class="nav-links">
+				<a href="/index.html">Home</a>
+				<a href="/todo-act.html">Todos</a>
+				<a href="/habits.html">Habits</a>
+				<a href="/eventplanner.html">Events</a>
+			</div>
+
+			<button class="logout-btn">Log out </button>	
+		</nav>
 
 		<main class="container">
-			<!-- Left side  - Form to add new activity -->
+			<!-- Left side - Form to add new activity -->
 			<section class="add-event">
 				<h2>Add New Event</h2>
 				<h4><span id="date"></span></h4>
 				<form id="add-event-form">
-					<label for="event-title">Event Title:</label>
+					<label for="event-title">Event Title</label>
 					<input type="text" id="event-title" name="event-title" placeholder="Enter event title" required/>
-                <label for="event-startDate">Start Time:</label>
-                <input type="datetime-local" id="event-startDate" name="event-startDate" placeholder="Enter event start date" required> 
-                <label for="event-endDate">End Time:</label>
-                <input type="datetime-local" id="event-endDate" name="event-endDate" placeholder="Enter event end date" required> 
-                <button type="submit">Submit</button>
-            </form>
-        </section>
+		
+					<label for="event-startDate">Start Time</label>
+					<input type="datetime-local" class="eventDateInput" id="event-startDate" name="event-startDate" required> 
+		
+					<label for="event-endDate">End Time</label>
+					<input type="datetime-local" class="eventDateInput" id="event-endDate" name="event-endDate" required> 
+		
+					<button type="submit">Submit</button>
+				</form>
+			</section>
+		
             <section class="event-section">
                 <div class="controls">
                     <h2>My Events</h2>
@@ -35,8 +61,8 @@
                         <label for="event-filter">Filter by Status:</label>
                         <select id="event-filter">
                             <option value="all">All</option>
-                            <option value="not-completed">Upcoming/Ongoing</option>
-                            <option value="completed">Passed</option>
+                            <option value="not-passed">Upcoming/Ongoing</option>
+                            <option value="passed">Passed</option>
                         </select>
                     </div>
                 </div>
