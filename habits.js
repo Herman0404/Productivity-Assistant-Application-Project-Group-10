@@ -1,3 +1,8 @@
+// Logout Functionality
+document.querySelector(".logout-btn").addEventListener("click", () => {
+    localStorage.removeItem("currentUser"); // Remove session
+    window.location.href = "login.html"; // Redirect to login page
+});
 document.addEventListener("DOMContentLoaded", function () {
 	let habitForm = document.querySelector(".add-habit-form");
 	let habitsContainer = document.getElementById("habits-container");

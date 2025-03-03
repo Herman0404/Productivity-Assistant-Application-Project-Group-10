@@ -1,3 +1,9 @@
+// Logout Functionality
+document.querySelector(".logout-btn").addEventListener("click", () => {
+    localStorage.removeItem("currentUser"); // Remove session
+    window.location.href = "login.html"; // Redirect to login page
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     displayTasks();
     displayEvents();
