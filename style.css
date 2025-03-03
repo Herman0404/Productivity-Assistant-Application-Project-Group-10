@@ -152,7 +152,7 @@ html body{
 
 /*EVENT SECTION*/
 
-#eventDisplay {
+#event-display {
     text-align: center;
     width: 100%; /* Ensure this takes up full width */
     margin-top: 20px; /* Optional margin for space from top */
@@ -200,6 +200,11 @@ html body{
     margin: 2px 0px; 
     padding: 0; 
     line-height: 1.4;
+}
+
+#event-display a {
+    font-size: 20px;
+    text-decoration: none;
 }
 
 .event-item:hover {
