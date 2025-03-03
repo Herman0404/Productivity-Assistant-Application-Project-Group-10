@@ -1,9 +1,22 @@
-// Logout Functionality
+// code by mansi ---Logout Functionality
 document.querySelector(".logout-btn").addEventListener("click", () => {
     localStorage.removeItem("currentUser"); // Remove session
     window.location.href = "login.html"; // Redirect to login page
 });
 
+//code by mansi ----for welcome
+// Step 1: Check if user is logged in
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    // If no user is logged in, redirect to login page
+    window.location.href = "login.html"; 
+} else {
+    // Step 2: Display welcome message with user's name
+    document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser.name}!`;
+}
+
+// function to display the recent tasks
 document.addEventListener('DOMContentLoaded', function() {
     displayTasks();
     displayEvents();

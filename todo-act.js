@@ -4,6 +4,7 @@ document.querySelector(".logout-btn").addEventListener("click", () => {
     window.location.href = "login.html"; // Redirect to login page
 });
 
+
 function displayDate (){
     let date = new Date();
     date = date.toDateString().split(' ');
@@ -22,11 +23,23 @@ form.addEventListener("submit", (e)=>{
     
     e.preventDefault(); //prevent the page from refreshing when the form is submitted
    
-     //GET TASK FROM LOCAL STORAGE-retrieve existing tasks from local storage or create an empty array if there are no tasks 
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return; // If user data is not found, stop
+
+
+     /*//GET TASK FROM LOCAL STORAGE-retrieve existing tasks from local storage or create an empty array if there are no tasks 
     //  -so we do not overwrite existing tasks when adding a new one 
     let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //parse the string to convert it to an array
     // get the index of the task being edited from the form attribute
-    let editingIndex = form.getAttribute("data-editing-index");
+    let editingIndex = form.getAttribute("data-editing-index");*/
     
     // get user input values from the form
     let title = document.querySelector("#task-title").value;
@@ -49,22 +62,24 @@ form.addEventListener("submit", (e)=>{
         createdAt: Date.now() // Ensure each task has a unique ID
     };
 
+     // get the index of the task being edited from the form attribute
+     let editingIndex = form.getAttribute("data-editing-index");
+
     if (editingIndex !== null) {
         // if ediitng index is not null, it means we are editing an existing task instead of adding a new one
-        tasks[editingIndex] = task;
+        userData.tasks[editingIndex] = task;
         form.removeAttribute("data-editing-index");
     } else {
         // if editing index is null, it means we are adding a new task
-        tasks.unshift(task);
+       userData.tasks.unshift(task);
     }
 
-   
-    
+       
     //add the new task to the tasks array - so that all the tasks (old+new) are saved together in local storage
     //tasks.push(task);
     
     //save the tasks array back to local storage- local storage does not accept objects, so we convert the array to a string
-    localStorage.setItem("tasks", JSON.stringify(tasks)); //convert the array to a string before saving it to local storage
+    localStorage.setItem("users", JSON.stringify(users)); //convert the array to a string before saving it to local storage
     
     //refresh the task list on the screen-as soon as a new task is added
     displayTasks();
@@ -80,9 +95,19 @@ displayTasks();
 });
 
 function displayTasks(){
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html";
+        return;
+    }
 
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //parse the string to convert it to an array
+    let users = JSON.parse(localStorage.getItem("users")) || []; //parse the string to convert it to an array
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+
     let taskList = document.querySelector("#task-list"); //this is the ul element where the tasks will be displayed
+    taskList.innerHTML = ""; // clear previous tasks
 
     // get filter and sort values from the form
     let filterStatus = document.querySelector("#status-filter").value;
@@ -90,7 +115,7 @@ function displayTasks(){
     let sortBy = document.querySelector("#sort-options").value;
 
    // Apply filtering
-   let filteredTasks = tasks.filter(task => {
+   let filteredTasks = userData.tasks.filter(task => {
     
         let statusMatch = 
         filterStatus === "all" || 
@@ -113,12 +138,12 @@ filteredTasks.sort((a, b) => {
 });
 
     //clear the existing list
-    taskList.innerHTML = "";
+   // taskList.innerHTML = "";
 
     //loop through the tasks array and display each task on the screen
 
     filteredTasks.forEach(filteredTask => { 
-        let originalIndex = tasks.findIndex(t => t.createdAt === filteredTask.createdAt); // Get correct index from local storage
+        let originalIndex = userData.tasks.findIndex(t => t.createdAt === filteredTask.createdAt); // Get correct index from local storage
     
     //filteredTasks.forEach((task, index) => {
         let li = document.createElement("li");
@@ -162,12 +187,17 @@ function applyFiltersAndSort() {
 
 // function to edit a task
 function editTask(index){
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    let task = tasks[index]; //get the task at the given index to be edited
-    
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+
+    let task = userData.tasks[index];//get the task at the given index to be edited
+
+      
        
-
-
     // fill the form with the task details to be edited
     let form = document.querySelector("#add-task-form");
    
@@ -183,25 +213,30 @@ function editTask(index){
     form.setAttribute("data-editing-index", index);
    
     //save the updated tasks array back to local storage
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("users", JSON.stringify(users));
     //refresh the task list on the screen
     displayTasks();
 }
 
 // function to delete a task
 function deleteTask(index){
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let users = JSON.parse(localStorage.getItem("users")) || [];
     //remove the task from the tasks array
     let confirmDelete = confirm("Are you sure you want to delete this task?");
     if (!confirmDelete){
         return;
     }
 
-    tasks.splice(index, 1);
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+
+    userData.tasks.splice(index, 1); // Remove task
     
     
     //save the updated tasks array back to local storage
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("users", JSON.stringify(users));
 
     //refresh the task list on the screen
     displayTasks();
@@ -213,13 +248,20 @@ function deleteTask(index){
 
 // function to mark a task as completed or not completed
 function toggleTaskCompletion(index) {
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+
+    
 
     // Toggle the task status
-    tasks[index].status = tasks[index].status === "Completed" ? "not-completed" : "Completed";
+    userData.tasks[index].status = userData.tasks[index].status === "Completed" ? "not-completed" : "Completed";
 
     // Save the updated tasks back to local storage
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("users", JSON.stringify(users));
 
     // Refresh the UI
     displayTasks();
