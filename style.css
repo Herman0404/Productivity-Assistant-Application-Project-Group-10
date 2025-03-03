@@ -150,24 +150,35 @@ html body{
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/*EVENT SECTION*/
 
-#event-display {
+/*Display section*/
+
+
+.display {
     text-align: center;
     width: 100%; /* Ensure this takes up full width */
     margin-top: 20px; /* Optional margin for space from top */
 }
 
-#events {
-    display: flex;
-    justify-content: space-evenly; /* Space out list items evenly within the row */
-    list-style-type: none;
-    padding: 0;
-    margin: 20px 0; /* Optional margin to separate the list from other content */
-    width: 100%; /* Ensure the list takes up full width */
+.display a {
+    font-size: 20px;
+    text-decoration: none;
 }
 
-.event-item {
+
+.display-list {
+    display: flex;
+    justify-content: space-evenly; /* Distribute items evenly */
+    align-items: stretch; /* Make all items the same height */
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+    width: 100%;
+}
+
+/*Display list section*/
+
+.list-item {
     background: #FFFFFF;
     border: 1px solid rgb(94, 184, 222);
     border-radius: 8px;
@@ -177,37 +188,41 @@ html body{
     flex-direction: column;
     gap: 5px;
     transition: 0.3s ease-in-out;
+    flex: 1 1 auto;
+    max-width: 25%;
 }
 
-.event-item h2 {
-    font-size: 24px;
-    margin: 5px 0px; 
+.list-item h3 {
+    font-size: 16px;
+    margin: 10px 0px; 
     padding: 0;
     line-height: 1.2; 
 }
 
-.event-item h3 {
-    font-size: 20px; 
-    font-weight: 500;
-    margin: 5px 0px; 
-    padding: 0;
-    line-height: 1.2; 
-}
-
-.event-item p {
-    font-size: 20px; 
-    font-weight: 350;
-    margin: 2px 0px; 
+.list-item p {
+    font-size: 14px;
+    margin: 3px 0px; 
     padding: 0; 
     line-height: 1.4;
 }
 
-#event-display a {
-    font-size: 20px;
-    text-decoration: none;
-}
-
-.event-item:hover {
+.list-item:hover {
     transform: translateY(-0.2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/*Tasks section*/
+
+
+#task-display{
+    align-items: stretch;
+}
+
+
+/*Event section*/
+
+
+#event-display{
+    align-items: stretch;
 }
