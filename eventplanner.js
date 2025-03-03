@@ -103,8 +103,8 @@ function displayEvents(events){
         li.innerHTML = `
             <div class="event-details">
                 <h3>${event.title}</h3>
-                    <p><strong>StartDate:</strong> ${startDate} ${startTime}</p>
-                <p><strong>EndDate</strong> ${endDate} ${endTime}</p>
+                    <p><strong>Start:</strong> ${startDate} ${startTime}</p>
+                <p><strong>End:</strong> ${endDate} ${endTime}</p>
             </div>
             <div class="event-actions">
                 <button class="edit-btn" onclick="editEvent(${event.index})">Edit</button>
@@ -148,11 +148,12 @@ function checkEventStatus(){
     let events = getArray()
 
     // calls for current date
-    let currentDate = new Date();
+    let currentDate = Date.now();
 
     // checks if current date is before or after event date
     events.forEach(event => {
-        if(event.endDate < currentDate){
+        console.log(currentDate - event.endDate.getTime())
+        if(event.endDate.getTime() < currentDate){
             event.status = "passed";
         } else {
             event.status = "not-passed";

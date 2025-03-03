@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     /* background-color: #F4F4F4; Light gray background */
@@ -7,15 +11,126 @@ body {
     padding: 0;
 }
 
-  
-header {
-    /*background-color: #007BFF;  Blue header */
-    background-color: #334977;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+/*Navbar*/
+
+.navbar {
+    background-color: #045FC1; /* Bright blue */
+    color: white;
+    width: 100%;
+    padding: 1.5vw 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
+
+.nav-links{
+    display: flex;
+    gap: 5vw;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9vw;
+    text-transform: uppercase;
+}
+
+a:hover {
+    color: #FF6F00;
+}
+
+
+.logout-btn {
+    color: white;
+    padding: 0.6vw 1vw;
+    background-image: linear-gradient(135deg, #66D3FA 0%, #3db8f1 10%, #0872a7 100%);
+    border: none;
+    outline: none;
+    border-radius: 0.7vw;
+    font-weight: 600;
+    font-size: 0.8vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    transition: 0.2s ease-in-out;
+    box-shadow: 0px 20px 30px -6px rgba(1, 15, 54, 0.3); /* Shadow for depth */
+}
+
+/*  Hover effect  */
+.logout-btn:hover {
+    background-image: linear-gradient(135deg, #66D3FA 0%, #3db8f1 10%, #0872a7 100%);
+    box-shadow: 0px 2px 4px rgba(4, 2, 95, 0.5); /* Reduce shadow */
+    transform: translateY(2px); /* Push down effect */
+}
+
+/*  clicking effect  */
+.logout-btn:active {
+    background-image: linear-gradient(135deg, #66D3FA 10%, #3db8f1 30%, #0872a7 90%);
+    box-shadow: 0px 1px 3px rgba(139, 68, 2, 0.6); /* Smallest shadow */
+    transform: translateY(4px); /* More pushed down */
+}
+
+/* the main logo text container*/
+.logo-text-main{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vh;
+}
+
+/* TaskNest Text name */
+.logo-name {
+    font-size: 1.8vw;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    color: white; /* "Task" in White */
+}
+
+
+/* Highlight "Nest" in orange */
+.highlight {
+    color: #FF6F00; 
+}
+
+/* tag line under the name*/
+.tag-line{
+    font-size: 0.8vw;
+    font-weight: bold;
+    
+    font-family: 'Poppins', sans-serif;
+    color: white; 
+
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+
+.logo-icon {
+    width: 3.5vw;  
+    height: 3.5vw;
+}
+
+@media (max-width:600px) {
+    .navbar{
+        padding: 0 6vw;
+        height: 60px;
+    }
+    .logo-icon{
+        width: 3vw;
+        height: 3vw;
+    }
+    
+    
+}
 
 .container {
     display: flex;
