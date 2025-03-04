@@ -157,8 +157,9 @@ html body{
 
 #quote-display {
     border: 1px dotted rgb(94, 184, 222);
-    width: 50%;
+    width: 60%;
     margin: auto;
+    padding: 20px;
 }
 
 #quote-display #quote {
