@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         displayTasks(userData.tasks);
         displayEvents(userData.events);
-        
+        fetchQuote();
     }
 });
 
@@ -169,3 +169,34 @@ function displayEvents(){
     }
     
 }
+
+async function fetchQuote() {
+    const url = "https://dummyjson.com/quotes/random";
+    const quote = document.getElementById("quote");
+    const author = document.getElementById("author");
+    let count = 3;
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+  
+        const json = await response.json();
+
+        const interval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                const text = `Most inspirational Quote ever in ${count}...`
+                quote.innerText = text;
+            } else {
+                clearInterval(interval);
+                quote.innerHTML = json.quote;
+                author.innerHTML = json.author;
+            }
+        }, 1000); 
+        
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
