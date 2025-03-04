@@ -76,6 +76,7 @@ form.addEventListener("submit", (e)=>{
         }
         
         // sorts events, updates local storage, filters events
+        sortEvents(userData.events)
         saveUserEvents(users);
         // resets forms
         form.reset();
@@ -258,6 +259,9 @@ function filterEvents(){
 
 // sorts events based on their startDate (earliest first)
 function sortEvents(events){
+    events.forEach(event => {
+        event.startDate = new Date(event.startDate);    
+    });
     events.sort((a, b) => a.startDate - b.startDate);
 }
 
@@ -317,19 +321,4 @@ function deleteEvent(index) {
     filterEvents();
     
     
-}
-
-
-// updates sorting, local storage and displays with filtering
-function eventsUpdate(events){
-    sortEvents(events);
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    let userData = users.find(user => user.email === currentUser.email);
-
-    if (!userData) return;
-    userData.events = events;
-    saveUserEvents(users);
-    filterEvents();
-
 }

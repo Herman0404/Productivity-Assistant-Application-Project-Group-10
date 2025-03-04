@@ -174,7 +174,6 @@ async function fetchQuote() {
     const url = "https://dummyjson.com/quotes/random";
     const quote = document.getElementById("quote");
     const author = document.getElementById("author");
-    let count = 3;
     
     try {
         const response = await fetch(url);
@@ -183,19 +182,8 @@ async function fetchQuote() {
         }
   
         const json = await response.json();
-
-        const interval = setInterval(() => {
-            count--;
-            if (count > 0) {
-                const text = `Most inspirational Quote ever in ${count}...`
-                quote.innerText = text;
-            } else {
-                clearInterval(interval);
-                quote.innerHTML = json.quote;
-                author.innerHTML = json.author;
-            }
-        }, 1000); 
-        
+        quote.innerHTML = json.quote;
+        author.innerHTML = json.author;  
     } catch (error) {
       console.error(error.message);
     }
