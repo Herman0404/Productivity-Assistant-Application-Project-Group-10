@@ -141,6 +141,7 @@ html body{
 .homepage-container {
     display: flex;
     flex-direction: column; /* Stack child elements vertically */
+    text-align: center;
     max-width: 80%;
     margin: 20px auto;
     gap: 20px;
@@ -151,11 +152,27 @@ html body{
 }
 
 
+/*Quote section*/
+
+
+#quote-display {
+    border: 1px dotted rgb(94, 184, 222);
+    width: 50%;
+    margin: auto;
+}
+
+#quote-display #quote {
+    font-weight: 450;
+}
+
+#quote-display #author {
+    font-weight: 350;
+}
+
 /*Display section*/
 
 
 .display {
-    text-align: center;
     width: 100%; /* Ensure this takes up full width */
     margin-top: 20px; /* Optional margin for space from top */
 }
