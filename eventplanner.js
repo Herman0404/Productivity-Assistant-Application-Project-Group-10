@@ -13,10 +13,15 @@ class Event {
     this.endDate = new Date(endDate);
     this.status = status;
     this.index = index;
-    }
-}
-
+                    
+                
+                  
+            }
+        }
+    
+    
 document.addEventListener('DOMContentLoaded', function() {
+    filterEvents();
 // creates a new event
 let form = document.querySelector("#add-event-form");
 
@@ -26,12 +31,22 @@ form.addEventListener("submit", (e)=>{
     // prevents form from refreshing site
     e.preventDefault();
 
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser) {
+            window.location.href = "login.html"; // Redirect if not logged in
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let userData = users.find(user => user.email === currentUser.email);
+        if (!userData) return;
+
     // takes localdata saved events into an array
     // map takes stringified versions of dates and makes them into date version (needed for calculations later)
-    let events = getArray()
+    //let events = getArray()
 
     // takes a value from the form to check wether or not its an edit
-    let editingIndex = form.getAttribute("data-editing-index");
+    //let editingIndex = form.getAttribute("data-editing-index");
 
     // saves values from the form
     let title = document.querySelector("#event-title").value;
@@ -42,7 +57,7 @@ form.addEventListener("submit", (e)=>{
     // checks if all inputs are correct
     if(checkEventValidity(title, startDate, endDate)){
         // gives status dependent on passed or not
-        let status = "passed"
+        let status = "passed";
         if(endTimestamp > Date.now()){
             status = "not-passed"
             console.log("yes")
@@ -50,19 +65,21 @@ form.addEventListener("submit", (e)=>{
 
         const event = new Event(title, startDate, endDate, status, Date.now());
         // checks using editingindex if its an edit or not
+        let editingIndex = form.getAttribute("data-editing-index");
         if (editingIndex !== null) {
             // if it is edit, exchange new event with old one
-            events[editingIndex] = event;
+            userData.events[editingIndex] = event;
             form.removeAttribute("data-editing-index");
         } else {
             // if its not an edit, add it into the array
-            events.push(event);
+            userData.events.push(event);
         }
         
         // sorts events, updates local storage, filters events
-        eventsUpdate(events);
+        saveUserEvents(users);
         // resets forms
         form.reset();
+        filterEvents();
     }
 });
 
@@ -76,6 +93,9 @@ filter.addEventListener("change", filterEvents)
 filterEvents();
 });
 
+function saveUserEvents(users) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
 
 // function that displays an array (in this case events)
 function displayEvents(events){
@@ -83,12 +103,23 @@ function displayEvents(events){
     checkEventStatus();
     let eventList = document.querySelector("#event-list");
 
+    if (!eventList) {
+        console.error("Error: #event-list not found on the page.");
+        return;
+    }
+
     // clears the event list before displaying the events
     eventList.innerHTML = "";
 
-    // loops through and displays each event
 
+    if (events.length === 0) {
+        eventList.innerHTML = `<li class="event-item"><h3>No events found</h3></li>`;
+        return;
+    }
+
+    // loops through and displays each event
     events.forEach(event => {
+        let eventEndDate = new Date(event.endDate);// convert to date
         // variable to create a new list inside event
         let li = document.createElement("li");
         // adds class "event-item" to the item
@@ -150,16 +181,25 @@ function checkEventValidity(title, startDate, endDate) {
 
 // Checks if the event date has passed or not
 function checkEventStatus(){
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) return;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    if (!userData) return;
+
     // saves event array
-    let events = getArray()
+    //let events = getArray()
 
     // calls for current date
     let currentDate = Date.now();
 
     // checks if current date is before or after event date
-    events.forEach(event => {
-        console.log(currentDate - event.endDate.getTime())
-        if(event.endDate.getTime() < currentDate){
+    userData.events.forEach(event => {
+
+        let eventEndDate = new Date(event.endDate);// convet to date object
+        
+        if(eventEndDate.getTime() < currentDate){
             event.status = "passed";
         } else {
             event.status = "not-passed";
@@ -167,14 +207,21 @@ function checkEventStatus(){
     });
 
     // saves new info into local storage
-    localStorage.setItem("events", JSON.stringify(events));
+    saveUserEvents(users);
 }
 
 function getArray(){
-    let events = (JSON.parse(localStorage.getItem("events")) || []).map(event => 
-        new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status, event.index)
-    );
-    return events;
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) return [];
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    // Ensure userData.events exists
+    if (!userData || !userData.events) return [];
+
+    return userData.events.map(event => new Event(event.title, new Date(event.startDate), new Date(event.endDate), event.status, event.index)
+  );
 }
 
 
@@ -229,14 +276,19 @@ function editEvent(index){
 
             //set the form attribute to the index of the event being edited
             form.setAttribute("data-editing-index", id);
-        
-            //save the updated events array back to local storage
-            localStorage.setItem("events", JSON.stringify(events));
-        }
-    });
-    //refresh the event list on the screen
-    filterEvents();
 
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let userData = users.find(user => user.email === currentUser.email);
+
+            if (!userData) return;
+            saveUserEvents(users);
+      
+          //refresh the event list on the screen
+           filterEvents();
+          
+}
+});
 }
 
 // deletes events
@@ -250,11 +302,17 @@ function deleteEvent(index) {
                 events.splice(id, 1)
             }
         }
-    })
+    });
 
-    // saves changes into local storage
-    localStorage.setItem("events", JSON.stringify(events));
 
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+
+    userData.events = events;
+    saveUserEvents(users);
     // displays events
     filterEvents();
     
@@ -265,7 +323,13 @@ function deleteEvent(index) {
 // updates sorting, local storage and displays with filtering
 function eventsUpdate(events){
     sortEvents(events);
-    localStorage.setItem("events", JSON.stringify(events));
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+    userData.events = events;
+    saveUserEvents(users);
     filterEvents();
 
 }

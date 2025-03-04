@@ -6,39 +6,56 @@ document.querySelector(".logout-btn").addEventListener("click", () => {
 
 //code by mansi ----for welcome
 // Step 1: Check if user is logged in
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+//make sure the page is fully loaded before running script 
+document.addEventListener("DOMContentLoaded", function () {
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-if (!currentUser) {
+    if (!currentUser) {
     // If no user is logged in, redirect to login page
     window.location.href = "login.html"; 
-} else {
-    // Step 2: Display welcome message with user's name
-    document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser.name}!`;
-}
+    return;
+    
+    }    
 
-// function to display the recent tasks
-document.addEventListener('DOMContentLoaded', function() {
-    displayTasks();
-    displayEvents();
-})
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (userData) {
+         // Display welcome message with user's name
+        document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser.name}!`;
+        
+        displayTasks(userData.tasks);
+        displayEvents(userData.events);
+        
+    }
+});
+
 
 function displayTasks(){
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //parse the string to convert it to an array
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    let tasks = userData ? userData.tasks : [];
+
+    //let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //parse the string to convert it to an array
     let taskList = document.querySelector("#tasks"); //this is the ul element where the tasks will be displayed
     
     // clear the existing list
     taskList.innerHTML = "";
 
     // creates array with only not-completed tasks
-    filteredTasks = tasks.filter(task => {
-        let notCompleted = task.status === "not-completed";
-        console.log(notCompleted);
-        return notCompleted;
-    });
+   let filteredTasks = tasks.filter(task => task.status !== "Completed");
+        
+    // get the 3 closest tasks based on deadline
+    let showTasks = getClosestDates(filteredTasks);
 
-    showTasks = getClosestDates(filteredTasks);
-
-    if(showTasks.length != 0){
+    if(showTasks.length !== 0){
         //loop through the tasks array and display each task on the screen
         showTasks.forEach(task => { 
             //tasks.forEach((task, index) => {
@@ -63,7 +80,7 @@ function displayTasks(){
         li.innerHTML = `
         <div class="task-details">
             <h3><strong>No uncompleted tasks</strong></h3>
-        `
+        </div>`;
         taskList.appendChild(li);
     }
     
@@ -82,8 +99,18 @@ function getClosestDates(tasks) {
 
 // Event display
 function displayEvents(){
-    // Array with value
-    let events = (JSON.parse(localStorage.getItem("events")) || []);
+    // Ensure user is logged in
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+
+    // Retrieve users and find the current user's data
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    let events = userData ? userData.events : [];
+
     let notPassedEvents = [];
     // Takes current date to compare
     let currentDate = Date.now();
@@ -123,7 +150,7 @@ function displayEvents(){
             li.innerHTML = `
                 <div class="event-details">
                     <h3><strong>${event.title}</strong></h3>
-                        <p><strong>Start:</strong> ${startDate} ${startTime}</p>
+                    <p><strong>Start:</strong> ${startDate} ${startTime}</p>
                     <p><strong>End:</strong> ${endDate} ${endTime}</p>
                 </div>`;
             // Adds into event list ul
