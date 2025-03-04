@@ -156,8 +156,14 @@ html body{
 
 
 #quote-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 1px dotted rgb(94, 184, 222);
     width: 60%;
+    min-height: 250px;
+    text-align: center;
     margin: auto;
     padding: 20px;
 }
