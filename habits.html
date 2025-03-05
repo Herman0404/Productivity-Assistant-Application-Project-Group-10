@@ -15,7 +15,6 @@
   </head>
 
   <body>
-
     <!-- nav-bar HTML code block copy-pasted from todo-act.html -->
     <nav class="navbar">
       <div class="logo">
@@ -32,7 +31,7 @@
             stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        
+
         <div class="logo-text-main">
           <span class="logo-name">Task<span class="highlight">Nest</span></span>
           <span class="tag-line">Organize, Prioritize, Achieve</span>
@@ -46,62 +45,13 @@
       </div>
       <button class="logout-btn">Log out</button>
     </nav>
+
     <main class="container">
-      <section class="add-habit">
-          <h2>Add New Habit</h2>
-          <form class="add-habit-form">
-              <label for="habit-title">Habit Title:</label>
-              <input type="text" id="habit-title" name="habit-title" placeholder="Enter habit title" required />
-
-              <label for="habit-prio">Priority:</label>
-              <div class="priority-options">
-                  <label><input type="radio" name="habit-prio" value="low" /> Low</label>
-                  <label><input type="radio" name="habit-prio" value="medium" checked /> Medium</label>
-                  <label><input type="radio" name="habit-prio" value="high" /> High</label>
-              </div>
-
-              <button type="submit">Create Habit</button>
-          </form>
-      </section>
-
-      <section class="habit-section">
-          <div class="controls">
-              <h2>Your Habits</h2>
-              <div class="filters">
-                  <label for="filter-priority">Filter by Priority:</label>
-                  <select id="filter-priority">
-                      <option value="all">All</option>
-                      <option value="low">Low priority</option>
-                      <option value="medium">Medium priority</option>
-                      <option value="high">High priority</option>
-                  </select>
-
-                  <label for="sort-repetitions">Sort by Repetitions:</label>
-                  <select id="sort-repetitions">
-                      <option value="ascending">Lowest first</option>
-                      <option value="descending">Highest first</option>
-                  </select>
-
-                  <button class="apply-btn">Apply Filters</button>
-              </div>
-          </div>
-
-          <ul id="habits-list">
-              <!-- Habits will be displayed here -->
-          </ul>
-      </section>
-  </main>
-
-</body>
-
-</html>
-
-    <!-- <main>
-    <header>
-      <h1>Habits & Routines</h1>
-      <button class="logout-btn" style="display: none">Logout</button>
-      <p id="date"></p>
-    </header>
+      <header>
+        <h1>Habits & Routines</h1>
+        <button class="logout-btn" style="display: none">Logout</button>
+        <p id="date"></p>
+      </header>
 
       <fieldset id="add-habit">
         <legend>Add new habit</legend>
@@ -148,9 +98,61 @@
 
       <fieldset id="habit-list">
         <legend>Your routines/habits</legend>
-        <div id="habits-container">
-        </div>
+        <div id="habits-container"></div>
       </fieldset>
     </main>
   </body>
+</html>
+
+<!-- <main class="container">
+      <section class="add-habit">
+          <h2>Add New Habit</h2>
+          <form class="add-habit-form">
+              <label for="habit-title">Habit title:</label>
+              <br>
+              <input type="text" id="habit-title" name="habit-title" placeholder="Enter habit title" required />
+              <br>
+              <br>
+              <label for="habit-prio">Priority:</label>
+              <div class="priority-options">
+                  <label><input type="radio" name="habit-prio" value="low" /> Low</label>
+                  <label><input type="radio" name="habit-prio" value="medium" checked /> Medium</label>
+                  <label><input type="radio" name="habit-prio" value="high" /> High</label>
+              </div>
+
+              <button type="submit">Create habit</button>
+          </form>
+      </section>
+
+      <section class="habit-section">
+          <div class="controls">
+              <h2>Your habits & routines</h2>
+              <div class="filters">
+                  <label for="filter-priority">Filter by priority:</label>
+                  <select id="filter-priority">
+                      <option value="all">All</option>
+                      <option value="low">Low priority</option>
+                      <option value="medium">Medium priority</option>
+                      <option value="high">High priority</option>
+                  </select>
+
+                  <label for="sort-repetitions">Sort by repetitions:</label>
+                  <select id="sort-repetitions">
+                  
+                      <option value="ascending">Lowest first</option>
+                      <option value="descending">Highest first</option>
+                  </select>
+
+                  <button class="apply-btn">Apply filters</button>
+              </div>
+          </div>
+
+          <ul id="habits-list">
+              Habits will be displayed here
+          </ul>
+      </section>
+  </main>
+
+</body>
+
 </html> -->
