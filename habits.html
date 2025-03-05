@@ -67,7 +67,7 @@
             name="habit-title"
             placeholder="Enter habit title" />
           <br />
-<!-- added some <br/>-tags here and there for space styling TEMP -->
+          <!-- added some <br/>-tags here and there for space styling TEMP -->
           <div class="priority-options">
             <label for="habit-prio">Priority level:</label>
             <br />
@@ -98,7 +98,7 @@
       <!-- Right side - filters & List of habits section -->
       <section class="habit-section">
         <div class="filter-sort">
-          <h3>Filter & sorting</h3>
+          <h3>Filter</h3>
           <div class="filters">
             <label for="filter-priority">Filter by priority:</label>
             <select id="filter-priority">
@@ -108,11 +108,18 @@
               <option value="high">High priority</option>
             </select>
 
-            <label for="sort-repetitions">Sort by repetitions: </label>
+            <h3>Sort by ...</h3>
+            <label for="sort-repetitions">Repetitions: </label>
             <select id="sort-repetitions">
-              <option value="ascending">Lowest first</option>
-              <option value="descending">Highest first</option>
+              <option value="ascending">Lowest</option>
+              <option value="descending">Highest</option>
             </select>
+
+            <!-- <label for="sort-priority">Priority: </label>
+            <select id="sort-priority">
+              <option value="ascending">Lowest</option>
+              <option value="descending">Highest</option>
+            </select> -->
 
             <!-- Apply filters button removed bc unnecessary -->
           </div>
