@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			habits = habits.filter((habit) => habit.priority === selectedPriority);
 		}
 
+
 		// apply sorting
 		let sortOrder = sortRepetitions.value;
 		if (sortOrder === "ascending") {
