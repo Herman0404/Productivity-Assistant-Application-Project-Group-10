@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function displayHabits() {
     let habitList = JSON.parse(localStorage.getItem("habits")) || [];
 
-    // apply filtering ( selectedFilterPriority )
+    // apply Filtering ( selectedFilterPriority )
     let selectedFilterPriority = filterPrio.value;
     if (selectedFilterPriority !== "all") {
       habitList = habitList.filter(
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
 
-    // apply sorting ( selectedSortOrder )
+    // apply Sorting ( selectedSortOrder )
     let selectedSortOrder = sortRepetitions.value;
     if (selectedSortOrder === "ascending") {
       habitList.sort((a, b) => a.repetitions - b.repetitions);
@@ -84,21 +84,37 @@ document.addEventListener("DOMContentLoaded", function () {
 				<h3>${habitItem.title}</h3>
 				<p><strong>Priority:</strong> ${habitItem.priority}</p>
 				<p><strong>Repetitions:</strong> <span id="reps-${habitItem.id}"> ${habitItem.repetitions}</span></p>
+        <button onclick="decreaseRepetitions(${habitItem.id})">-1</button> 
         <button onclick="increaseRepetitions(${habitItem.id})">+1</button> 
-				<button onclick="deleteHabit(${habitItem.id})">Delete</button>
+				<button onclick="deleteHabit(${habitItem.id})">Remove habit</button>
 			`;
+      // new addition trying subtract function decreaseRepetitions
       habitsContainer.appendChild(habitElement);
     });
   }
 
   window.increaseRepetitions = function (habitId) {
     let habitList = JSON.parse(localStorage.getItem("habits")) || [];
-
     let habitItem = habitList.find((h) => h.id === habitId);
     if (habitItem) {
       habitItem.repetitions++;
       localStorage.setItem("habits", JSON.stringify(habitList));
       displayHabits();
+    }
+  };
+
+  // function for decreasing repetition count if needed //
+  window.decreaseRepetitions = function (habitId) {
+    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
+    let habitItem = habitList.find((h) => h.id === habitId);
+
+    // added if-statement to prevent repetition-count going below 0 //
+    if (habitItem) {
+      if (habitItem.repetitions > 0) {
+        habitItem.repetitions--;
+        localStorage.setItem("habits", JSON.stringify(habitList));
+        displayHabits();
+      }
     }
   };
 
