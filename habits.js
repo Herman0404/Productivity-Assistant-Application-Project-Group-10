@@ -23,7 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let habitForm = document.querySelector(".add-habit-form");
   let habitsContainer = document.getElementById("habits-list");
   let filterPrio = document.getElementById("filter-priority");
+  // sorting: 
   let sortRepetitions = document.getElementById("sort-repetitions");
+  let sortPriority = document.getElementById("sort-priority");
 
   habitForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -50,15 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
     //save the habits array to local storage - local storage does not accept 'objects', so it's converted into a string (.stringify)
     localStorage.setItem("habits", JSON.stringify(habitList));
 
-    //re-display habits list as soon as a new task is added
-    displayHabits();
+    displayHabits();    //re-display habits list as soon as a new task is added
     habitForm.reset(); // clears the fields of the form upon submit
   });
+
 
   function displayHabits() {
     let habitList = JSON.parse(localStorage.getItem("habits")) || [];
 
-    // apply Filtering ( selectedFilterPriority )
+    // apply Filtering by priority ( selectedFilterPriority )
     let selectedFilterPriority = filterPrio.value;
     if (selectedFilterPriority !== "all") {
       habitList = habitList.filter(
@@ -66,13 +68,25 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
 
-    // apply Sorting ( selectedSortOrder )
+    // apply Sorting by repetitions ( selectedSortOrder )
     let selectedSortOrder = sortRepetitions.value;
     if (selectedSortOrder === "ascending") {
       habitList.sort((a, b) => a.repetitions - b.repetitions);
-    } else if (selectedSortOrder === "descending") {
+    } 
+    else if (selectedSortOrder === "descending") {
       habitList.sort((a, b) => b.repetitions - a.repetitions);
     }
+
+
+    // apply Sorting by priority ( selectedPrioOrder )
+    let selectedPrioOrder = sortPriority.value;
+    if (selectedPrioOrder === "ascending") {
+      habitList.sort((a, b) => prioIntValue(a.priority) - prioIntValue(b.priority));
+    } 
+    else if (selectedPrioOrder === "descending") {
+      habitList.sort((a, b) => prioIntValue(b.priority) - prioIntValue(a.priority));
+    }
+
 
     // clear and display habitList (again)
     habitsContainer.innerHTML = "";
@@ -80,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let habitElement = document.createElement("div");
       habitElement.classList.add("habitItem-item");
 
+          // decreaseRepetitions function 
       habitElement.innerHTML = `
 				<h3>${habitItem.title}</h3>
 				<p><strong>Priority:</strong> ${habitItem.priority}</p>
@@ -88,9 +103,15 @@ document.addEventListener("DOMContentLoaded", function () {
         <button onclick="increaseRepetitions(${habitItem.id})">+1</button> 
 				<button onclick="deleteHabit(${habitItem.id})">Remove habit</button>
 			`;
-      // new addition trying subtract function decreaseRepetitions
+  
       habitsContainer.appendChild(habitElement);
     });
+  }
+
+// Conversion function (basically) for only assigning INT values to prio-levels (low,medium,high)(strings) for sort() function: 
+  function prioIntValue(priority) { 
+    const priorityLevels = { "low": 1, "medium": 2, "high": 3 };
+    return priorityLevels[priority] || 0;
   }
 
   window.increaseRepetitions = function (habitId) {
@@ -129,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // update the displayed habits whenever filtering or sorting is changed, rather than having a button to apply filters onclick
   filterPrio.addEventListener("change", displayHabits);
   sortRepetitions.addEventListener("change", displayHabits);
+  sortPriority.addEventListener("change", displayHabits);
 
   // upon initial load
   displayHabits();
