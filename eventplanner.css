@@ -134,9 +134,9 @@ a:hover {
 
 .container {
     display: flex;
-    width: 1400px;
+    width: 80%;
     margin: 30px auto;
-    gap: 50px;
+    gap: 20px;
 }
 
 
@@ -148,10 +148,11 @@ a:hover {
     align-self: flex-start;
     overflow: auto;
     background: #fff;
-    padding: 5px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .add-event form,
 h2 {
@@ -200,12 +201,12 @@ h2 {
 
 .event-section {
     flex: 2;
-    align-self: flex-start;
+    /*align-self: flex-start;*/
     overflow: auto;
     background: #fff;
     padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 
