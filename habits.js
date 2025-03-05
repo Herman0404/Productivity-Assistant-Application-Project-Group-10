@@ -1,21 +1,23 @@
-// Check if user is logged in
+
+// check if user is logged in
 function checkAuth() {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
     window.location.href = "login.html"; // Redirect to login if no currentUser is active
-  } else {
+  } 
+  else {
     document.querySelector(".logout-btn").style.display = "block";
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // first of all upon load, force login/sign-up to proceed by running checkAuth() function:
+  // first of all upon load, force login/sign-up prompt popup to proceed by calling function checkAuth(); :
   checkAuth();
   displayDate();
 
   // Logout Functionality (mansi's) - put INSIDE DOMContentLoaded instead of above //
   document.querySelector(".logout-btn").addEventListener("click", () => {
-    localStorage.removeItem("currentUser"); // Remove session
+    localStorage.removeItem("currentUser"); // "Remove" session
     window.location.href = "login.html"; // Redirect to login page
   });
 
@@ -27,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   habitForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    let habits = JSON.parse(localStorage.getItem("habits")) || [];
+    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
     let habitTitle = document.getElementById("habit-title").value;
     let habitPriority = document.querySelector(
       "input[name='habit-prio']:checked"
@@ -40,72 +42,82 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    let habit = {
+    let habitItem = {
+      id: Date.now(), // assign a unique ID based on timestamp //
       title: habitTitle,
       priority: habitPriority,
       repetitions: 0,
     };
 
-    habits.push(habit);
-    localStorage.setItem("habits", JSON.stringify(habits));
+    habitList.push(habitItem);
+    localStorage.setItem("habits", JSON.stringify(habitList));
 
     displayHabits();
-    habitForm.reset();
+    habitForm.reset(); // clears the FIELDS of the form upon submit
   });
 
   function displayHabits() {
-    let habits = JSON.parse(localStorage.getItem("habits")) || [];
+    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
 
-    // apply filtering
-    let selectedPriority = filterPrio.value;
-    if (selectedPriority !== "all") {
-      habits = habits.filter((habit) => habit.priority === selectedPriority);
+    // apply filtering ( selectedFilterPriority )
+    let selectedFilterPriority = filterPrio.value;
+    if (selectedFilterPriority !== "all") {
+      habitList = habitList.filter(
+        (habitItem) => habitItem.priority === selectedFilterPriority
+      );
     }
 
-    // apply sorting
-    let sortOrder = sortRepetitions.value;
-    if (sortOrder === "ascending") {
-      habits.sort((a, b) => a.repetitions - b.repetitions);
-    } else if (sortOrder === "descending") {
-      habits.sort((a, b) => b.repetitions - a.repetitions);
+    // apply sorting ( selectedSortOrder )
+    let selectedSortOrder = sortRepetitions.value;
+    if (selectedSortOrder === "ascending") {
+      habitList.sort((a, b) => a.repetitions - b.repetitions);
+    } else if (selectedSortOrder === "descending") {
+      habitList.sort((a, b) => b.repetitions - a.repetitions);
     }
 
-    // Clear & re-render habits
+    // clear and display habitList (again) // (now without Index)
     habitsContainer.innerHTML = "";
-    habits.forEach((habit, index) => {
+    habitList.forEach((habitItem) => {
       let habitElement = document.createElement("div");
-      habitElement.classList.add("habit-item");
+      habitElement.classList.add("habitItem-item");
 
       habitElement.innerHTML = `
-				<h3>${habit.title}</h3>
-				<p><strong>Priority:</strong> ${habit.priority}</p>
-				<p><strong>Repetitions:</strong> ${habit.repetitions}</p>
-				<button onclick="increaseRepetitions(${index})">+1</button>
-				<button onclick="deleteHabit(${index})">Delete</button>
+				<h3>${habitItem.title}</h3>
+				<p><strong>Priority:</strong> ${habitItem.priority}</p>
+				<p><strong>Repetitions:</strong> <span id="reps-${habitItem.id}"> ${habitItem.repetitions}</span></p>
+				
+        <button onclick="increaseRepetitions(${habitItem.id})">+1</button> 
+
+				<button onclick="deleteHabit(${habitItem.id})">Delete</button>
 			`;
       habitsContainer.appendChild(habitElement);
     });
   }
 
-  window.increaseRepetitions = function (index) {
-    let habits = JSON.parse(localStorage.getItem("habits")) || [];
-    habits[index].repetitions++;
-    localStorage.setItem("habits", JSON.stringify(habits));
+  //
+  window.increaseRepetitions = function (habitId) {
+    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
+
+    let habitItem = habitList.find((h) => h.id === habitId);
+    if (habitItem) {
+      habitItem.repetitions++;
+      localStorage.setItem("habits", JSON.stringify(habitList));
+      displayHabits();
+    }
+  };
+
+  window.deleteHabit = function (habitId) {
+    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
+    habitList = habitList.filter((h) => h.id !== habitId); //remove by ID
+    localStorage.setItem("habits", JSON.stringify(habitList));
     displayHabits();
   };
 
-  window.deleteHabit = function (index) {
-    let habits = JSON.parse(localStorage.getItem("habits")) || [];
-    habits.splice(index, 1);
-    localStorage.setItem("habits", JSON.stringify(habits));
-    displayHabits();
-  };
-
-  // Update the displayed habits whenever filtering or sorting is changed
+  // update the displayed habits whenever filtering or sorting is changed
   filterPrio.addEventListener("change", displayHabits);
   sortRepetitions.addEventListener("change", displayHabits);
 
-  // Initial load
+  // upon initial load
   displayHabits();
 });
 
