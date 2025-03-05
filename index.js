@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
          // Display welcome message with user's name
         document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser.name}!`;
         
-        displayTasks(userData.tasks);
-        displayEvents(userData.events);
+        displayTasks();
+        displayEvents();
         
     }
 });
