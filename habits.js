@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // sorting: 
   let sortRepetitions = document.getElementById("sort-repetitions");
   let sortPriority = document.getElementById("sort-priority");
+  
 
   habitForm.addEventListener("submit", function (event) {
     event.preventDefault();
