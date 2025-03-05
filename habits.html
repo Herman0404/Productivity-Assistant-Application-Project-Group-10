@@ -10,7 +10,9 @@
       rel="stylesheet" />
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="habits.css" />
     <script src="habits.js" defer></script>
+
     <title>Habits & Routines</title>
   </head>
 
@@ -47,59 +49,69 @@
     </nav>
 
     <main class="container">
-      <header>
-        <h1>Habits & Routines</h1>
-        <button class="logout-btn" style="display: none">Logout</button>
-        <p id="date"></p>
-      </header>
-
-      <fieldset id="add-habit">
-        <legend>Add new habit</legend>
+      <section class="add-habit">
+        <header>
+          <h1>Habits & Routines</h1>
+          <p id="date"></p>
+        </header>
 
         <form class="add-habit-form">
+          <h3>Add new habit</h3>
           <label for="habit-title">Title of your habit: </label>
-          <input type="text" id="habit-title" />
+          <input
+            type="text"
+            id="habit-title"
+            name="habit-title"
+            placeholder="Enter habit title"
+            required />
 
-          <label>Priority level:</label>
-          <label
-            ><input type="radio" name="habit-prio" value="low" /> Low
-            priority</label
-          >
-          <label
-            ><input type="radio" name="habit-prio" value="medium" checked />
-            Medium priority</label
-          >
-          <label
-            ><input type="radio" name="habit-prio" value="high" /> High
-            priority</label
-          >
+          <div class="priority-options">
+            <label for="habit-prio">Priority level:</label>
+            <label
+              ><input type="radio" name="habit-prio" value="low" /> Low
+              priority</label
+            >
+            <label
+              ><input type="radio" name="habit-prio" value="medium" /> Medium
+              priority</label
+            >
+            <label
+              ><input type="radio" name="habit-prio" value="high" /> High
+              priority</label
+            >
+          </div>
 
-          <button type="submit">Create routine</button>
+          <button type="submit">Create habit/routine</button>
         </form>
-      </fieldset>
+      </section>
 
-      <fieldset id="filter-sort">
-        <legend>Filter & sorting</legend>
+      <section class="habit-section">
+        <div class="filter-sort">
+          <h3>Filter & sorting</h3>
+          <div class="filters">
+            <label for="filter-priority">Filter by priority:</label>
+            <select id="filter-priority">
+              <option value="all">All</option>
+              <option value="low">Low priority</option>
+              <option value="medium">Medium priority</option>
+              <option value="high">High priority</option>
+            </select>
 
-        <label for="filter-priority">Filter by priority:</label>
-        <select id="filter-priority">
-          <option value="all">All</option>
-          <option value="low">Low priority</option>
-          <option value="medium">Medium priority</option>
-          <option value="high">High priority</option>
-        </select>
+            <label for="sort-repetitions">Sort by repetitions: </label>
+            <select id="sort-repetitions">
+              <option value="ascending">Lowest first</option>
+              <option value="descending">Highest first</option>
+            </select>
 
-        <label for="sort-repetitions">Sort by repetitions: </label>
-        <select id="sort-repetitions">
-          <option value="ascending">Lowest first</option>
-          <option value="descending">Highest first</option>
-        </select>
-      </fieldset>
+            <button class="apply-btn">Apply Filters</button>
+          </div>
+        </div>
 
-      <fieldset id="habit-list">
-        <legend>Your routines/habits</legend>
-        <div id="habits-container"></div>
-      </fieldset>
+        <ul id="habits-list">
+          <h3>Your routines/habits</h3>
+          <!-- Habits will be displayed here -->
+        </ul>
+      </section>
     </main>
   </body>
 </html>

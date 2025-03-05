@@ -4,7 +4,7 @@ function checkAuth() {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
     window.location.href = "login.html"; // Redirect to login if no currentUser is active
-  } 
+  }
   else {
     document.querySelector(".logout-btn").style.display = "block";
   }
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   let habitForm = document.querySelector(".add-habit-form");
-  let habitsContainer = document.getElementById("habits-container");
+  let habitsContainer = document.getElementById("habits-list");
   let filterPrio = document.getElementById("filter-priority");
   let sortRepetitions = document.getElementById("sort-repetitions");
 
