@@ -47,8 +47,11 @@
       </div>
       <button class="logout-btn">Log out</button>
     </nav>
+    <!-- nav code block ended -->
 
+    <!-- main container holding all content -->
     <main class="container">
+      <!-- Left side  - Form to add new habit -->
       <section class="add-habit">
         <header>
           <h1>Habits & Routines</h1>
@@ -62,19 +65,25 @@
             type="text"
             id="habit-title"
             name="habit-title"
-            placeholder="Enter habit title"
-            required />
-
+            placeholder="Enter habit title" />
+          <br />
+<!-- added some <br/>-tags here and there for space styling TEMP -->
           <div class="priority-options">
             <label for="habit-prio">Priority level:</label>
+            <br />
+
             <label
               ><input type="radio" name="habit-prio" value="low" /> Low
               priority</label
             >
+            <br />
+
             <label
               ><input type="radio" name="habit-prio" value="medium" /> Medium
               priority</label
             >
+            <br />
+
             <label
               ><input type="radio" name="habit-prio" value="high" /> High
               priority</label
@@ -84,7 +93,9 @@
           <button type="submit">Create habit/routine</button>
         </form>
       </section>
+      <!-- end left section-->
 
+      <!-- Right side - filters & List of habits section -->
       <section class="habit-section">
         <div class="filter-sort">
           <h3>Filter & sorting</h3>
@@ -103,68 +114,15 @@
               <option value="descending">Highest first</option>
             </select>
 
-            <button class="apply-btn">Apply Filters</button>
+            <!-- Apply filters button removed bc unnecessary -->
           </div>
         </div>
 
+        <h3>Your routines/habits</h3>
         <ul id="habits-list">
-          <h3>Your routines/habits</h3>
-          <!-- Habits will be displayed here -->
+          <!-- Habit list will be displayed dynamically here -->
         </ul>
       </section>
     </main>
   </body>
 </html>
-
-<!-- <main class="container">
-      <section class="add-habit">
-          <h2>Add New Habit</h2>
-          <form class="add-habit-form">
-              <label for="habit-title">Habit title:</label>
-              <br>
-              <input type="text" id="habit-title" name="habit-title" placeholder="Enter habit title" required />
-              <br>
-              <br>
-              <label for="habit-prio">Priority:</label>
-              <div class="priority-options">
-                  <label><input type="radio" name="habit-prio" value="low" /> Low</label>
-                  <label><input type="radio" name="habit-prio" value="medium" checked /> Medium</label>
-                  <label><input type="radio" name="habit-prio" value="high" /> High</label>
-              </div>
-
-              <button type="submit">Create habit</button>
-          </form>
-      </section>
-
-      <section class="habit-section">
-          <div class="controls">
-              <h2>Your habits & routines</h2>
-              <div class="filters">
-                  <label for="filter-priority">Filter by priority:</label>
-                  <select id="filter-priority">
-                      <option value="all">All</option>
-                      <option value="low">Low priority</option>
-                      <option value="medium">Medium priority</option>
-                      <option value="high">High priority</option>
-                  </select>
-
-                  <label for="sort-repetitions">Sort by repetitions:</label>
-                  <select id="sort-repetitions">
-                  
-                      <option value="ascending">Lowest first</option>
-                      <option value="descending">Highest first</option>
-                  </select>
-
-                  <button class="apply-btn">Apply filters</button>
-              </div>
-          </div>
-
-          <ul id="habits-list">
-              Habits will be displayed here
-          </ul>
-      </section>
-  </main>
-
-</body>
-
-</html> -->

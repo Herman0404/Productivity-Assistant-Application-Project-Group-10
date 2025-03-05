@@ -1,21 +1,20 @@
-
 // check if user is logged in
 function checkAuth() {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
-    window.location.href = "login.html"; // Redirect to login if no currentUser is active
-  }
-  else {
+    window.location.href = "login.html"; // redirect to login if no currentUser is active
+  } else {
     document.querySelector(".logout-btn").style.display = "block";
   }
 }
 
+// main function that loads the page's content
 document.addEventListener("DOMContentLoaded", function () {
   // first of all upon load, force login/sign-up prompt popup to proceed by calling function checkAuth(); :
   checkAuth();
   displayDate();
 
-  // Logout Functionality (mansi's) - put INSIDE DOMContentLoaded instead of above //
+  // Logout Functionality - put INSIDE DOMContentLoaded instead of above //
   document.querySelector(".logout-btn").addEventListener("click", () => {
     localStorage.removeItem("currentUser"); // "Remove" session
     window.location.href = "login.html"; // Redirect to login page
@@ -36,9 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     )?.value;
 
     if (!habitTitle || !habitPriority) {
-      alert(
-        "Kindly input a title for your habit/routine and its priority level"
-      );
+      alert("Kindly input a title for your habit and its priority level!");
       return;
     }
 
@@ -50,10 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     habitList.push(habitItem);
+    //save the habits array to local storage - local storage does not accept 'objects', so it's converted into a string (.stringify)
     localStorage.setItem("habits", JSON.stringify(habitList));
 
+    //re-display habits list as soon as a new task is added
     displayHabits();
-    habitForm.reset(); // clears the FIELDS of the form upon submit
+    habitForm.reset(); // clears the fields of the form upon submit
   });
 
   function displayHabits() {
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
       habitList.sort((a, b) => b.repetitions - a.repetitions);
     }
 
-    // clear and display habitList (again) // (now without Index)
+    // clear and display habitList (again)
     habitsContainer.innerHTML = "";
     habitList.forEach((habitItem) => {
       let habitElement = document.createElement("div");
@@ -92,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  //
   window.increaseRepetitions = function (habitId) {
     let habitList = JSON.parse(localStorage.getItem("habits")) || [];
 
@@ -104,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  // function to delete a task
   window.deleteHabit = function (habitId) {
     let habitList = JSON.parse(localStorage.getItem("habits")) || [];
     habitList = habitList.filter((h) => h.id !== habitId); //remove by ID
@@ -111,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     displayHabits();
   };
 
-  // update the displayed habits whenever filtering or sorting is changed
+  // update the displayed habits whenever filtering or sorting is changed, rather than having a button to apply filters onclick
   filterPrio.addEventListener("change", displayHabits);
   sortRepetitions.addEventListener("change", displayHabits);
 
@@ -119,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
   displayHabits();
 });
 
+// display current date and time just because
 function displayDate() {
   let date = new Date().toDateString().split(" ");
   document.getElementById(

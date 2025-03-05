@@ -4,7 +4,6 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  /* background-color: #F4F4F4; Light gray background */
   background-color: #f2f6ff;
   color: #222222; /* Dark gray text */
   margin: 0;
@@ -28,7 +27,7 @@ body {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* left-side form */
+/* left-side - form */
 .add-habit {
   flex: 1;
   background: #fff;
@@ -38,7 +37,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* right-side task list */
+/* right-side - habit list */
 .habit-section {
   flex: 2;
   flex-wrap: wrap;
@@ -54,6 +53,7 @@ body {
   margin-top: 20px;
   width: 100%;
 }
+
 #habits-list li {
   display: flex;
   justify-content: space-between;
@@ -62,6 +62,7 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+/* applied styling to ALL buttons not specifying */
 button {
   background: #28a745;
   color: white;
