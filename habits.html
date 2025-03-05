@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
+
     <script src="habits.js" defer></script>
     <title>Habits & Routines</title>
   </head>
@@ -38,14 +38,15 @@
           
     </nav>
     <header>
-      <h1>Habits & Routines</h1>
+      
       <button class="logout-btn" style="display: none">Logout</button>
       <p id="date"></p>
     </header>
-    <main>
-      <fieldset id="add-habit">
-        <legend>Add new habit</legend>
-
+    <main class="container">
+      <!--left side of form-->
+      <div id="add-habit">
+        <h2>Add new habit</h2>
+        <h4><p id="date"></p></h4>
         <form class="add-habit-form">
           <label for="habit-title">Title of your habit: </label>
           <input type="text" id="habit-title" />
@@ -66,32 +67,35 @@
 
           <button type="submit">Create routine</button>
         </form>
-      </fieldset>
+      </div>
+      <div class="task-section">
+        <h2>My Habits & Routines</h2>
+        <fieldset id="filter-sort">
+          
+          <legend> Filter & sorting</legend>
 
-      <fieldset id="filter-sort">
-        <legend>Filter & sorting</legend>
+            <label for="filter-priority">Filter by priority:</label>
+            <select id="filter-priority">
+              <option value="all">All</option>
+              <option value="low">Low priority</option>
+              <option value="medium">Medium priority</option>
+              <option value="high">High priority</option>
+            </select>
 
-        <label for="filter-priority">Filter by priority:</label>
-        <select id="filter-priority">
-          <option value="all">All</option>
-          <option value="low">Low priority</option>
-          <option value="medium">Medium priority</option>
-          <option value="high">High priority</option>
-        </select>
+            <label for="sort-repetitions">Sort by repetitions: </label>
+            <select id="sort-repetitions">
+              <option value="ascending">Lowest first</option>
+              <option value="descending">Highest first</option>
+            </select>
+        </fieldset>
 
-        <label for="sort-repetitions">Sort by repetitions: </label>
-        <select id="sort-repetitions">
-          <option value="ascending">Lowest first</option>
-          <option value="descending">Highest first</option>
-        </select>
-      </fieldset>
-
-      <fieldset id="habit-list">
-        <legend>Your routines/habits</legend>
-        <div id="habits-container">
+        <fieldset id="habit-list">
+          <legend>Your routines/habits</legend>
+          <div id="habits-container">
           <!-- routines/habits rendered here via javascript -->
-        </div>
-      </fieldset>
+          </div>
+        </fieldset>
+      </div>
     </main>
   </body>
 </html>
