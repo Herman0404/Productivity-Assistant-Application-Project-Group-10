@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="habits.css" />
@@ -53,43 +51,30 @@
     <main class="container">
       <!-- Left side  - Form to add new habit -->
       <section class="add-habit">
-        <header>
-          <h1>Habits & Routines</h1>
-          <p id="date"></p>
-        </header>
-
+        <h2>Habits & Routines</h2>
+        <h4><span id="date"></span></h4>
         <form class="add-habit-form">
-          <h3>Add new habit</h3>
-          <label for="habit-title">Title of your habit: </label>
-          <input
-            type="text"
-            id="habit-title"
-            name="habit-title"
-            placeholder="Enter habit title" />
-          <br />
-          <!-- added some <br/>-tags here and there for space styling TEMP -->
+          <label for="habit-title">Title of your habit:</label>
+          <input type="text" id="habit-title" name="habit-title" placeholder="Enter habit title"/>
+          
+          <h3>Priority level:</h3>
           <div class="priority-options">
-            <label for="habit-prio">Priority level:</label>
-            <br />
-
-            <label
-              ><input type="radio" name="habit-prio" value="low" /> Low
-              priority</label
-            >
-            <br />
-
-            <label
-              ><input type="radio" name="habit-prio" value="medium" /> Medium
-              priority</label
-            >
-            <br />
-
-            <label
-              ><input type="radio" name="habit-prio" value="high" /> High
-              priority</label
-            >
+            <div class="prioItem">
+              <label for="habit-prio">Low priority</label>
+            <input type="radio" class="prio-button" name="habit-prio" value="low" />
+            </div>
+            <div class="prioItem">
+              <label for="habit-prio">Medium priority</label>
+            <input type="radio" class="prio-button" name="habit-prio" value="medium" />
+            </div>
+            <div class="prioItem">
+              <label for="habit-prio"> High priority</label>
+              <input type="radio" class="prio-button" name="habit-prio" value="high" />
+            </div>
+            
+            
+            
           </div>
-
           <button type="submit">Create habit/routine</button>
         </form>
       </section>
@@ -97,9 +82,10 @@
 
       <!-- Right side - filters & List of habits section -->
       <section class="habit-section">
+        <h2>My Habits</h2>
         <div class="filter-sort">
-          <h3>Filter</h3>
-          <div class="filters">
+
+          <div class="filter">
             <label for="filter-priority">Filter by priority:</label>
             <select id="filter-priority">
               <option value="all" selected>All</option>
@@ -107,9 +93,9 @@
               <option value="medium">Medium priority</option>
               <option value="high">High priority</option>
             </select>
-
-            <h3>Sort by ...</h3>
-            <label for="sort-repetitions">Repetitions: </label>
+            
+            <h3>Sort by...</h3>
+            <label for="sort-repetitions">Repetitions:</label>
             <select id="sort-repetitions">
               <option value="none" selected>None</option> <!-- just added -->
               <option value="ascending">Lowest</option>
@@ -128,7 +114,7 @@
         </div>
 
         <h3>Your routines/habits</h3>
-        <ul id="habits-list">
+        <ul id="habit-list">
           <!-- Habit list will be displayed dynamically here -->
         </ul>
       </section>

@@ -149,7 +149,6 @@ function displayEvents(events){
           <div class="event-actions">
               <button class="edit-btn" onclick="editEvent(${event.index})">Edit</button>
               <button class="delete-btn" onclick="deleteEvent(${event.index})">Delete</button>
-          
           </div>
           `;
       if(event.status === "passed"){
