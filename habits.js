@@ -164,9 +164,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!userData) return;
     let habitItem = userData.habits.find((h) => h.id === habitId);
     if (habitItem) {
-      habitItem.repetitions--;
+      if(habitItem.repetitions > 0){
+        habitItem.repetitions--;
       saveUserEvents(users)
       displayHabits();
+      } 
     }
   };
 
