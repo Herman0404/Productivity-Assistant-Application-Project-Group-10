@@ -12,16 +12,19 @@ class Event {
   this.startDate = new Date(startDate);
   this.endDate = new Date(endDate);
   this.status = status;
-  this.index = index;
-                  
-              
-                
-          }
-      }
-  
+  this.index = index;   
+  }
+}
+
+function displayDate (){
+  let date = new Date();
+  date = date.toDateString().split(' ');
+  document.getElementById('date').innerHTML = date[0] + ', ' + date[2] + ' ' + date[1] + ' ' + date[3];
+}
   
 document.addEventListener('DOMContentLoaded', function() {
   filterEvents();
+  displayDate();
 // creates a new event
 let form = document.querySelector("#add-event-form");
 

@@ -154,26 +154,19 @@ a:hover {
 }
 
 
-.add-event form,
-h2 {
+.add-event form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.add-event label {
-  font-weight: bold;
 }
 
 .add-event input,
 .add-event button,
 .add-event select {
-  width: 80%;
+  width: 98%;
   margin-bottom: 10px;
   padding: 10px;
-  text-align: center;
   border: 1px solid #cccccc;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 20px; 
 }
@@ -215,16 +208,11 @@ h2 {
 
 .controls {
   margin-bottom: 20px;
-  margin-left: auto;  /* Push to the right */
   margin-right: auto; /* Push to the left */
   width: fit-content; /* Ensures the controls only take up as much space as needed */
 }
 
 .filter {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  align-items: center;
   gap: 5px;
   margin-bottom: 50px;
 }
@@ -310,7 +298,6 @@ h2 {
 .event-actions {
   display: flex;
   gap: 10px;
-  align-items: center;
   justify-content: flex-start; 
   flex-wrap: wrap;
 }

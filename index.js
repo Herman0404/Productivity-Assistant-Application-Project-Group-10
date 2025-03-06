@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser.name}!`;
       
       displayTasks();
+      displayHabits();
       displayEvents();
       fetchQuote();
   }
@@ -96,6 +97,20 @@ function getClosestDates(tasks) {
       .slice(0, 3); 
 }
 
+function displayHabits(){
+    // Ensure user is logged in
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+      window.location.href = "login.html"; // Redirect if not logged in
+      return;
+  }
+
+  // Retrieve users and find the current user's data
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let userData = users.find(user => user.email === currentUser.email);
+  let habits = userData ? userData.habits : [];
+  console.log(habits);
+}
 
 // Event display
 function displayEvents(){
