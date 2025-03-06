@@ -28,12 +28,14 @@ let underline = document.querySelector(".underline");
 
 const handleClickLogin = () => {
 
- 
-
   //switch UI to login form    
   nameField1.style.maxHeight="0";
   confirmPwdField.style.maxHeight="0";
   title.innerHTML = "Log In";
+
+  // Disable Sign Up button & enable Log In button
+  document.querySelector(".signupbtn").disabled = true;
+  document.querySelector(".loginbtn").disabled = false;
 
   signUpBtns.forEach(button => {
       button.classList.add("disable");
@@ -51,13 +53,15 @@ logInBtns.forEach(button => {
 
 
 const handleClickSignup = () =>  {
-
-    
   
   // switch UI to signup form
   nameField1.style.maxHeight="60px";
   confirmPwdField.style.maxHeight="60px";
   title.innerHTML = "Sign Up";
+
+   // Disable Log In button & enable Sign Up button
+   document.querySelector(".signupbtn").disabled = false;
+   document.querySelector(".loginbtn").disabled = true;
 
   signUpBtns.forEach(button => {
       button.classList.remove("disable");

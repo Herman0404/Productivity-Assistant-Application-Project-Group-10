@@ -240,7 +240,7 @@ button {
   position: absolute;
   transition: 2s;
   left: 60%;
-  top: -80%;
+  top: -150%;
 }
 
 .show-form-box {
@@ -316,6 +316,13 @@ button {
   background: #eaeaea;
   color: #555;
 }
+
+button:disabled {
+  cursor: not-allowed; /* Remove pointer, show "not allowed" symbol */
+  opacity: 0.5; /* Reduce opacity to show it's disabled */
+  pointer-events: none; /* Completely disable hover/click */
+}
+
 .error-message {
   color: red;
   font-size: 0.8vw;
