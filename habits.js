@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   let habitForm = document.querySelector(".add-habit-form");
-  let habitsContainer = document.getElementById("habits-list");
+  let habitsContainer = document.getElementById("habit-list");
   let filterPrio = document.getElementById("filter-priority");
   // sorting: 
   let sortRepetitions = document.getElementById("sort-repetitions");
@@ -110,17 +110,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // clear and display habitList (again)
     habitsContainer.innerHTML = "";
     habitList.forEach((habitItem) => {
-      let habitElement = document.createElement("div");
-      habitElement.classList.add("habitItem-item");
+      let habitElement = document.createElement("li");
+      habitElement.classList.add("habit-item");
 
           // decreaseRepetitions function 
       habitElement.innerHTML = `
 				<h3>${habitItem.title}</h3>
 				<p><strong>Priority:</strong> ${habitItem.priority}</p>
 				<p><strong>Repetitions:</strong> <span id="reps-${habitItem.id}"> ${habitItem.repetitions}</span></p>
-        <button onclick="decreaseRepetitions(${habitItem.id})">-1</button> 
-        <button onclick="increaseRepetitions(${habitItem.id})">+1</button> 
-				<button onclick="deleteHabit(${habitItem.id})">Remove habit</button>
+        <div class="habit-actions">
+          <button class="repetion-button" onclick="decreaseRepetitions(${habitItem.id})">-1</button> 
+          <button class="repetion-button" onclick="increaseRepetitions(${habitItem.id})">+1</button>
+          <button class="delete-btn" onclick="deleteHabit(${habitItem.id})">Remove habit</button> 
+        </div>
+				
 			`;
   
       habitsContainer.appendChild(habitElement);
