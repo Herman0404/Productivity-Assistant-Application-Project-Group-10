@@ -180,8 +180,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let userData = users.find(user => user.email === currentUser.email);
+
     if (!userData) return;
-    userData.habits = userData.habits.filter((h) => h.id !== habitId); //remove by ID
+    const habitToDelete = userData.habits.find((h) => h.id === habitId);
+    if(habitToDelete && window.confirm(`Are you sure you want to delete "${habitToDelete.title}"?`)){
+      userData.habits = userData.habits.filter((h) => h.id !== habitId); // Remove by ID
+    }
+    
     saveUserEvents(users)
     displayHabits();
   };
