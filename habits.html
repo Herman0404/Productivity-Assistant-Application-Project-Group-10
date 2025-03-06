@@ -1,68 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="habits.js" defer></script>
-		<title>Habits & Routines</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
 
-	<body>
-		
-		<header>
-			<h1>Habits & routines</h1>
-		</header>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="habits.css" />
+    <script src="habits.js" defer></script>
 
-		<main>
-			<fieldset id="add-habit">
-				<legend>Add new habit</legend>
+    <title>Habits & Routines</title>
+  </head>
 
-				<form class="add-habit-form">
-					<label for="habit-title">Title of your habit: </label>
-					<input type="text" id="habit-title" required />
+  <body>
+    <!-- nav-bar HTML code block copy-pasted from todo-act.html -->
+    <nav class="navbar">
+      <div class="logo">
+        <svg
+          class="logo-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="white" />
+          <path
+            d="M30 50 L45 65 L70 35"
+            stroke="#FF6F00"
+            stroke-width="8"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
 
-					<label>Priority level:</label>
-					<label
-						><input type="radio" name="habit-prio" value="low" /> Low
-						priority</label
-					>
-					<label
-						><input type="radio" name="habit-prio" value="medium" checked />
-						Medium priority</label
-					>
-					<label
-						><input type="radio" name="habit-prio" value="high" /> High
-						priority</label
-					>
+        <div class="logo-text-main">
+          <span class="logo-name">Task<span class="highlight">Nest</span></span>
+          <span class="tag-line">Organize, Prioritize, Achieve</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/todo-act.html">Todos</a>
+        <a href="/habits.html">Habits</a>
+        <a href="/eventplanner.html">Events</a>
+      </div>
+      <button class="logout-btn">Log out</button>
+    </nav>
+    <!-- nav code block ended -->
 
-					<button type="submit">Create routine</button>
-				</form>
-			</fieldset>
+    <!-- main container holding all content -->
+    <main class="container">
+      <!-- Left side  - Form to add new habit -->
+      <section class="add-habit">
+        <h2>Habits & Routines</h2>
+        <h4><span id="date"></span></h4>
+        <form class="add-habit-form">
+          <label for="habit-title">Title of your habit:</label>
+          <input type="text" id="habit-title" name="habit-title" placeholder="Enter habit title"/>
+          
+          <h3>Priority level:</h3>
+          <div class="priority-options">
+            <div class="prioItem">
+              <label for="habit-prio">Low priority</label>
+            <input type="radio" class="prio-button" name="habit-prio" value="low" />
+            </div>
+            <div class="prioItem">
+              <label for="habit-prio">Medium priority</label>
+            <input type="radio" class="prio-button" name="habit-prio" value="medium" />
+            </div>
+            <div class="prioItem">
+              <label for="habit-prio"> High priority</label>
+              <input type="radio" class="prio-button" name="habit-prio" value="high" />
+            </div>
+            
+            
+            
+          </div>
+          <button type="submit">Create habit/routine</button>
+        </form>
+      </section>
+      <!-- end left section-->
 
-			<fieldset id="filter-sort">
-				<legend>Filter & sorting</legend>
+      <!-- Right side - filters & List of habits section -->
+      <section class="habit-section">
+        <h2>My Habits</h2>
+        <div class="filter-sort">
 
-				<label for="filter-priority">Filter by priority:</label>
-				<select id="filter-priority">
-					<option value="all">All</option>
-					<option value="low">Low priority</option>
-					<option value="medium">Medium priority</option>
-					<option value="high">High priority</option>
-				</select>
+          <div class="filter">
+            <label for="filter-priority">Filter by priority:</label>
+            <select id="filter-priority">
+              <option value="all" selected>All</option>
+              <option value="low">Low priority</option>
+              <option value="medium">Medium priority</option>
+              <option value="high">High priority</option>
+            </select>
+            
+            <h3>Sort by...</h3>
+            <label for="sort-repetitions">Repetitions:</label>
+            <select id="sort-repetitions">
+              <option value="none" selected>None</option> <!-- just added -->
+              <option value="ascending">Lowest</option>
+              <option value="descending">Highest</option>
+            </select>
 
-				<label for="sort-repetitions">Sort by repetitions: </label>
-				<select id="sort-repetitions">
-					<option value="ascending">Lowest first</option>
-					<option value="descending">Highest first</option>
-				</select>
-			</fieldset>
+            <label for="sort-priority">Priority: </label>
+            <select id="sort-priority">
+              <option value="none" selected>None</option>
+              <option value="ascending">Lowest</option>
+              <option value="descending">Highest</option>
+            </select>
 
-			<fieldset id="habit-list">
-				<legend>Your routines/habits</legend>
-				<div id="habits-container">
-					<!-- routines/habits rendered here via javascript -->
-				</div>
-			</fieldset>
-		</main>
-	</body>
+            <!-- Apply filters button removed bc unnecessary -->
+          </div>
+        </div>
+
+        <h3>Your routines/habits</h3>
+        <ul id="habit-list">
+          <!-- Habit list will be displayed dynamically here -->
+        </ul>
+      </section>
+    </main>
+  </body>
 </html>

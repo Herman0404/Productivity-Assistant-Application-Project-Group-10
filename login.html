@@ -1,92 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="login.css" />
     <title>Sign in page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <script src="login.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="sign-in-main">
-        <div class="header">
-            <div class="logo">
-                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="white"/>
-                    <path d="M30 50 L45 65 L70 35" stroke="#FF6F00" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="logo-text-main">
-                    <span class="logo-name">Task<span class="highlight">Nest</span></span> 
-                    <span class="tag-line">Organize, Prioritize, Achieve</span>           
-                </div><!--end logo-text-main-->
-            </div><!--logo--> 
-            <div class="buttons">
-                <button class="sign-up-btn signup" onclick="showModal()">Sign up</button>
-                <button class="log-in-btn log-in" onclick="showModal()">Log in </button>
-            </div>
-        </div><!--end header-->
-        <div class="content">
-            <div class="left">
-                <h1>Your Productivity Hub: Plan, Track, and Achieve More.</h1>
-                <p>Streamline your workflow, stay ahead of every deadline, and turn your to-dos into accomplishments—faster and smarter.</p>
-                <button class="getstarted" onclick="showModal()">Get started free</button>
-            </div><!--end left-->
+      <div class="header">
+        <div class="logo">
+          <svg
+            class="logo-icon"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="white" />
+            <path
+              d="M30 50 L45 65 L70 35"
+              stroke="#FF6F00"
+              stroke-width="8"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div class="logo-text-main">
+            <span class="logo-name"
+              >Task<span class="highlight">Nest</span></span
+            >
+            <span class="tag-line">Organize, Prioritize, Achieve</span>
+          </div>
+          <!--end logo-text-main-->
+        </div>
+        <!--logo-->
+        <div class="buttons">
+          <button class="sign-up-btn signup" onclick="showModal()">
+            Sign up
+          </button>
+          <button class="log-in-btn log-in" onclick="showModal()">
+            Log in
+          </button>
+        </div>
+      </div>
+      <!--end header-->
+      <div class="content">
+        <div class="left">
+          <h1>Your Productivity Hub: Plan, Track, and Achieve More.</h1>
+          <p>
+            Streamline your workflow, stay ahead of every deadline, and turn
+            your to-dos into accomplishments—faster and smarter.
+          </p>
+          <button class="getstarted" onclick="showModal()">
+            Get started free
+          </button>
+        </div>
+        <!--end left-->
 
-            <div class="right">
-                <img src="./images/Namnlös.png" alt="">
-            </div> <!--end right-->
-
-        </div><!--content-->
-    </div><!--end sign-in-main-->
+        <div class="right">
+          <img src="./images/Namnlös.png" alt="" />
+        </div>
+        <!--end right-->
+      </div>
+      <!--content-->
+    </div>
+    <!--end sign-in-main-->
     <div class="form-bg"></div>
 
     <div class="form-box">
-    <span class="cross" onclick="hideModal()">&times;</span>
-    <h1 class="title">Sign Up</h1>
-    <div class="underline"></div>
-    <form action="" class="sign-in-form">
+      <span class="cross" onclick="hideModal()">&times;</span>
+      <h1 class="title">Sign Up</h1>
+      <div class="underline"></div>
+      <form action="" class="sign-in-form">
         <div class="input-group">
-
-            <div class="input-field nameField">
+          <div class="input-field nameField">
             <i class="fa-solid fa-user"></i>
-            <input type="text" id="name" placeholder="Name" required>
-            </div><!--end input-field-->
-            
-            
+            <input type="text" id="name" placeholder="Name" required />
+          </div>
+          <!--end input-field-->
 
-            <div class="input-field">
+          <div class="input-field">
             <i class="fa-solid fa-at"></i>
-            <input type="email" id="email" placeholder="Email" required>
-            </div><!--end input-field-->
-            
-            
+            <input type="email" id="email" placeholder="Email" required />
+          </div>
+          <!--end input-field-->
 
-            <div class="input-field">
+          <div class="input-field">
             <i class="fa-solid fa-key"></i>
-            <input type="password" id="password" placeholder="Password" required>
-            </div><!--end input-field-->
-            
-            
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              required />
+          </div>
+          <!--end input-field-->
 
-            <div class="input-field confirmPwd">
+          <div class="input-field confirmPwd">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-            </div><!--end input-field-->
-            
-            
-
-        </div><!--end input-group-->
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm Password"
+              required />
+          </div>
+          <!--end input-field-->
+        </div>
+        <!--end input-group-->
         <div class="btn-field">
-            <button type="button" class="sign-up-btn signupbtn">Sign Up</button>
-            <button type="button" class="log-in-btn disable loginbtn">Log In </button>
-
-        </div> <!--end htn-field-->
-    </form><!--end sign-in-form-->
-    </div><!--form-box-->
-
-</body>
+          <button type="button" class="sign-up-btn signupbtn">Sign Up</button>
+          <button type="button" class="log-in-btn disable loginbtn">
+            Log In
+          </button>
+        </div>
+        <!--end htn-field-->
+      </form>
+      <!--end sign-in-form-->
+    </div>
+    <!--form-box-->
+  </body>
 </html>
