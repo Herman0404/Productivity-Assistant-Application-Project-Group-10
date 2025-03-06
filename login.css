@@ -240,7 +240,7 @@ button {
   position: absolute;
   transition: 2s;
   left: 60%;
-  top: -60%;
+  top: -80%;
 }
 
 .show-form-box {
@@ -309,7 +309,7 @@ button {
 }
 
 .input-group {
-  height: 280px;
+  height: 270px;
 }
 
 .btn-field .disable {
