@@ -63,7 +63,6 @@ form.addEventListener("submit", (e)=>{
       let status = "passed";
       if(endTimestamp > Date.now()){
           status = "not-passed"
-          console.log("yes")
       }
 
       const event = new Event(title, startDate, endDate, status, Date.now());

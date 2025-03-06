@@ -31,7 +31,16 @@ document.addEventListener("DOMContentLoaded", function () {
   habitForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser) {
+          window.location.href = "login.html"; // Redirect if not logged in
+          return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let userData = users.find(user => user.email === currentUser.email);
+      if (!userData) return;
+
     let habitTitle = document.getElementById("habit-title").value;
     let habitPriority = document.querySelector(
       "input[name='habit-prio']:checked"
@@ -49,9 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
       repetitions: 0,
     };
 
-    habitList.push(habitItem);
+    userData.habits.push(habitItem);
     //save the habits array to local storage - local storage does not accept 'objects', so it's converted into a string (.stringify)
-    localStorage.setItem("habits", JSON.stringify(habitList));
+    saveUserEvents(users)
 
     displayHabits();    //re-display habits list as soon as a new task is added
     habitForm.reset(); // clears the fields of the form upon submit
@@ -59,7 +68,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function displayHabits() {
-    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+    
+    // Retrieve users and find the current user's data
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    let habitList = userData ? userData.habits : [];
 
     // apply Filtering by priority ( selectedFilterPriority )
     let selectedFilterPriority = filterPrio.value;
@@ -116,35 +134,60 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.increaseRepetitions = function (habitId) {
-    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
-    let habitItem = habitList.find((h) => h.id === habitId);
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    if (!userData) return;
+    let habitItem = userData.habits.find((h) => h.id === habitId);
     if (habitItem) {
       habitItem.repetitions++;
-      localStorage.setItem("habits", JSON.stringify(habitList));
+      saveUserEvents(users)
       displayHabits();
     }
   };
 
   // function for decreasing repetition count if needed //
   window.decreaseRepetitions = function (habitId) {
-    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
-    let habitItem = habitList.find((h) => h.id === habitId);
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
 
-    // added if-statement to prevent repetition-count going below 0 //
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+    if (!userData) return;
+    let habitItem = userData.habits.find((h) => h.id === habitId);
     if (habitItem) {
-      if (habitItem.repetitions > 0) {
-        habitItem.repetitions--;
-        localStorage.setItem("habits", JSON.stringify(habitList));
-        displayHabits();
-      }
+      habitItem.repetitions--;
+      saveUserEvents(users)
+      displayHabits();
     }
   };
 
   // function to delete a task
   window.deleteHabit = function (habitId) {
-    let habitList = JSON.parse(localStorage.getItem("habits")) || [];
-    habitList = habitList.filter((h) => h.id !== habitId); //remove by ID
-    localStorage.setItem("habits", JSON.stringify(habitList));
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+        window.location.href = "login.html"; // Redirect if not logged in
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let userData = users.find(user => user.email === currentUser.email);
+
+    if (!userData) return;
+    const habitToDelete = userData.habits.find((h) => h.id === habitId);
+    if(habitToDelete && window.confirm(`Are you sure you want to delete "${habitToDelete.title}"?`)){
+      userData.habits = userData.habits.filter((h) => h.id !== habitId); // Remove by ID
+    }
+    
+    saveUserEvents(users)
     displayHabits();
   };
 
@@ -156,6 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // upon initial load
   displayHabits();
 });
+
+function saveUserEvents(users) {
+  localStorage.setItem("users", JSON.stringify(users));
+}
 
 // display current date and time just because
 function displayDate() {

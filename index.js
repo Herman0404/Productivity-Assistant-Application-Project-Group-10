@@ -109,7 +109,44 @@ function displayHabits(){
   let users = JSON.parse(localStorage.getItem("users")) || [];
   let userData = users.find(user => user.email === currentUser.email);
   let habits = userData ? userData.habits : [];
-  console.log(habits);
+  let showHabits = habitRepitions(habits)
+
+  // Takes only the 3 upcoming events
+  let habitList = document.querySelector("#habits");
+  habitList.innerHTML = "";
+
+  if(showHabits != 0){
+    showHabits.forEach(habit => { 
+        let li = document.createElement("li");
+        li.classList.add("list-item");
+    
+        // Task status display (Updates dynamically)
+        li.innerHTML = `
+            <div class="habit-details">
+                <h3>${habit.title}</h3>
+				<p><strong>Priority:</strong> ${habit.priority}</p>
+				<p><strong>Repetitions:</strong> <span id="reps-${habit.id}"> ${habit.repetitions}</span></p>
+            </div>`;
+        habitList.appendChild(li);
+    });    
+  } else {
+    let li = document.createElement("li");
+      li.classList.add("list-item")
+
+      li.innerHTML = `
+      <div class="habit-details">
+          <h3><strong>No habits created</strong></h3>
+      </div>`;
+      habitList.appendChild(li);
+  }
+  
+}
+
+function habitRepitions(habits){
+    const showHabits = habits
+    .sort((a, b) => b.repetitions - a.repetitions)
+    .slice(0, 3);
+    return showHabits;
 }
 
 // Event display
